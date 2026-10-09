@@ -1,0 +1,3 @@
+# Concept Compass
+
+Project initialized.
