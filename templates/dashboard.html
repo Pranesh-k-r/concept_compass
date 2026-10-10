@@ -1,0 +1,185 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div class="dashboard">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:1rem;">
+        <h2 style="margin:0;">Student Dashboard</h2>
+        <div style="display:flex; gap:0.5rem;">
+            <a href="?subject=Mathematics" class="btn btn-small {% if current_subject == 'Mathematics' %}btn-primary{% else %}btn-secondary{% endif %}">📐 Mathematics</a>
+            <a href="?subject=English" class="btn btn-small {% if current_subject == 'English' %}btn-primary{% else %}btn-secondary{% endif %}">📚 English</a>
+        </div>
+    </div>
+    <div class="card" style="background: linear-gradient(135deg, var(--primary) 0%, #ec4899 100%); color: white; border: none; margin-bottom: 2rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+            <div>
+                <h2 style="margin-top:0; color:white;">Welcome back, {% if user.is_authenticated %}{{ user.username }}{% else %}Guest{% endif %}!</h2>
+                <p style="margin:0; opacity:0.9;">Ready to continue your math journey?</p>
+            </div>
+            <div style="display:flex; gap:1rem;">
+                <a href="{% url 'progress:study_plan' %}" class="btn" style="background:rgba(255,255,255,0.2); color:white; border:1px solid rgba(255,255,255,0.4);">📅 My Study Plan</a>
+                <a href="{% url 'quizzes:subject_selection' %}" class="btn" style="background:white; color:var(--primary);">🎯 Start Learning</a>
+            </div>
+        </div>
+    </div>
+    
+    <div style="display:flex; gap:1.5rem; flex-wrap:wrap; margin-top:2rem;">
+        
+        <!-- Main Actions Column -->
+        <div style="flex: 1; min-width: 300px;">
+            <div class="card my-3" style="border-left: 4px solid var(--primary);">
+                <h3>Start Learning</h3>
+                <p>Take a dynamic, adaptive quiz to identify potential learning gaps in Math or English.</p>
+                <a href="{% url 'quizzes:subject_selection' %}" class="btn btn-primary w-100 mt-2">Start Diagnostic Quiz</a>
+            </div>
+            
+            {% if priorities %}
+            <div class="card my-3">
+                <h3>What Should I Study Next?</h3>
+                <p class="text-light" style="margin-bottom:1rem; font-size:0.9rem;">Your personalized study priorities</p>
+                <div style="display:flex; flex-direction:column; gap:1rem;">
+                    {% for p in priorities %}
+                        <div style="padding:1rem; border-radius:0.5rem; background:var(--bg); border-left:4px solid {% if p.rank == 0 %}var(--error){% elif p.rank == 1 %}var(--warning){% elif p.rank == 2 %}var(--success){% else %}var(--text-light){% endif %};">
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <h4 style="margin:0;">{{ p.concept.name }}</h4>
+                                <span class="badge" style="font-size:0.75rem; background:{% if p.rank == 0 %}var(--error){% elif p.rank == 1 %}var(--warning){% elif p.rank == 2 %}var(--success){% else %}var(--text-light){% endif %}; color:#fff;">
+                                    {{ p.category }}
+                                </span>
+                            </div>
+                            <p style="font-size:0.85rem; color:var(--text-light); margin-top:0.5rem;">{{ p.reason }}</p>
+                            <div style="margin-top:0.75rem; display:flex; gap:0.5rem;">
+                                {% if p.rank != 3 %}
+                                    <a href="{% url 'learning:lesson' p.concept.concept_id %}" class="btn btn-small btn-primary">📖 Lesson</a>
+                                    <a href="{% url 'learning:practice' p.concept.concept_id %}" class="btn btn-small btn-secondary">✏️ Practice</a>
+                                {% else %}
+                                    <a href="{% url 'quizzes:subject_selection' %}" class="btn btn-small btn-primary">🎯 More Quizzes</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            
+            <div class="card my-3">
+                <h3>Recent Activity</h3>
+                {% if recent_sessions %}
+                    <ul class="session-list">
+                    {% for session in recent_sessions %}
+                        <li>
+                            <div style="display:flex; flex-direction:column;">
+                                <strong>Quiz Session</strong>
+                                <span style="font-size:0.85rem; color:var(--text-light);">{{ session.started_at|date:"M d, g:i A" }}</span>
+                            </div>
+                            {% if session.completed_at %}
+                                <a href="{% url 'quizzes:diagnostic_report' session.id %}" class="btn btn-small btn-secondary">Report</a>
+                            {% else %}
+                                <a href="{% url 'quizzes:quiz_question' session.id %}" class="btn btn-small">Resume</a>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                    </ul>
+                {% else %}
+                    <div class="empty-state text-center py-4">
+                        <p class="text-light">You haven't taken any quizzes yet.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Analytics Column -->
+        <div style="flex: 1; min-width: 300px;">
+            <div class="card my-3">
+                <h3>Activity Chart</h3>
+                <canvas id="activityChart" height="200"></canvas>
+            </div>
+            
+            <div class="card my-3">
+                <h3>Gamification Stats</h3>
+                {% if user.is_authenticated %}
+                <div style="display:flex; justify-content:space-between; text-align:center; margin-top:1rem;">
+                    <div>
+                        <div style="font-size:2rem; font-weight:bold; color:var(--success);">{{ user.profile.points }}</div>
+                        <div style="font-size:0.85rem; color:var(--text-light); text-transform:uppercase;">Total Points</div>
+                    </div>
+                    <div>
+                        <div style="font-size:2rem; font-weight:bold; color:var(--warning);">{{ user.profile.current_streak }} 🔥</div>
+                        <div style="font-size:0.85rem; color:var(--text-light); text-transform:uppercase;">Day Streak</div>
+                    </div>
+                </div>
+                {% else %}
+                <p>Please <a href="{% url 'login' %}">login</a> to track your points and streaks!</p>
+                {% endif %}
+            </div>
+            <div class="card my-3">
+                <h3>Achievements 🏆</h3>
+                {% if user.is_authenticated %}
+                <div style="display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:1rem;">
+                    {% if user.profile.points >= 50 %}
+                        <span class="badge" style="background:#e0e7ff; color:#3730a3; padding:0.5rem;">🥉 Bronze Scholar</span>
+                    {% endif %}
+                    {% if user.profile.points >= 150 %}
+                        <span class="badge" style="background:#fef3c7; color:#92400e; padding:0.5rem;">🥈 Silver Analyst</span>
+                    {% endif %}
+                    {% if user.profile.points >= 300 %}
+                        <span class="badge" style="background:#fef08a; color:#854d0e; padding:0.5rem;">🥇 Gold Master</span>
+                    {% endif %}
+                    {% if user.profile.points < 50 %}
+                        <p class="text-light">Earn 50 points to unlock your first badge!</p>
+                    {% endif %}
+                </div>
+                {% else %}
+                <p class="text-light">Login to unlock badges!</p>
+                {% endif %}
+            </div>
+            
+        </div>
+        
+    </div>
+</div>
+
+<script>
+    // Prepare data for Chart.js from recent sessions
+    const sessionDates = [];
+    const questionsAnswered = [];
+    
+    {% for session in recent_sessions reversed %}
+        sessionDates.push('{{ session.started_at|date:"M d" }}');
+        questionsAnswered.push({{ session.responses.count }});
+    {% endfor %}
+    
+    // If no data, provide dummy data for visualization
+    if (sessionDates.length === 0) {
+        sessionDates.push('Mon', 'Tue', 'Wed', 'Thu', 'Fri');
+        questionsAnswered.push(0, 0, 0, 0, 0);
+    }
+    
+    const ctx = document.getElementById('activityChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: sessionDates,
+            datasets: [{
+                label: 'Questions Answered',
+                data: questionsAnswered,
+                borderColor: '#4f46e5',
+                backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                tension: 0.4,
+                fill: true,
+                borderWidth: 2,
+                pointBackgroundColor: '#4f46e5'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { beginAtZero: true, ticks: { stepSize: 1 } }
+            }
+        }
+    });
+</script>
+{% endblock %}

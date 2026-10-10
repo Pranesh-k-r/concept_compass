@@ -1,0 +1,288 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="report-container">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h2>Diagnostic Report</h2>
+        <div>
+            <a href="{% url 'progress:graph' %}" class="btn btn-primary" style="margin-right: 0.5rem;">🗺️ Explore Learning Map</a>
+            <button onclick="window.print()" class="btn btn-secondary">🖨️ Save as PDF</button>
+        </div>
+    </div>
+    <p>Session completed at: {{ session.completed_at|date:"M d, Y H:i" }}</p>
+    
+    <!-- Section A: Overall Performance -->
+    <div class="card my-4" style="text-align: center; background: var(--bg);">
+        <h3>Overall Quiz Performance</h3>
+        <div style="font-size: 3rem; font-weight: 900; color: {% if percentage >= 80 %}var(--success){% elif percentage >= 50 %}var(--warning){% else %}var(--error){% endif %};">
+            {{ percentage }}%
+        </div>
+        <p style="font-size: 1.1rem; color: var(--text-light);">
+            {{ total_correct }} Correct | {{ total_incorrect }} Incorrect | {{ total_answered }} Total
+        </p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Section B: Quiz Performance Chart -->
+    {% if chart_data %}
+    <div class="card my-4">
+        <h3>Your Topic Performance in This Quiz</h3>
+        <div style="height:300px; width:100%;">
+            <canvas id="quizChart"></canvas>
+        </div>
+        <script>
+            const rawChart = JSON.parse('{{ chart_data|safe }}');
+            const ctx = document.getElementById('quizChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: rawChart.map(d => d.label),
+                    datasets: [{
+                        label: 'Accuracy %',
+                        data: rawChart.map(d => d.accuracy),
+                        backgroundColor: rawChart.map(d => d.color),
+                        minBarLength: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const d = rawChart[context.dataIndex];
+                                    return `${d.label} | Accuracy: ${d.accuracy}% | Correct: ${d.correct} | Wrong: ${d.incorrect} | Attempts: ${d.attempted}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: { y: { beginAtZero: true, max: 100 } }
+                }
+            });
+        </script>
+        
+        <div style="display:flex; gap:2rem; margin-top:2rem;">
+            <div style="flex:1;">
+                <h4 style="color:var(--error);">Topics to Improve</h4>
+                <ul style="padding-left:1.5rem;">
+                {% for t in topics %}
+                    {% if t.accuracy < 80 %}
+                        <li class="mb-2">
+                            <strong>{{ t.concept.name }}</strong> ({{ t.accuracy|floatformat:0 }}% - {{ t.attempted }} attempts)<br>
+                            <a href="{% url 'learning:lesson' t.concept.concept_id %}" class="btn btn-small mt-1" style="font-size:0.8rem; padding:0.2rem 0.5rem;">📚 Study Now</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                </ul>
+            </div>
+            <div style="flex:1;">
+                <h4 style="color:var(--success);">Topics Performing Well</h4>
+                <ul style="padding-left:1.5rem;">
+                {% for t in topics %}
+                    {% if t.accuracy >= 80 %}
+                        <li class="mb-2">
+                            <strong>{{ t.concept.name }}</strong> ({{ t.accuracy|floatformat:0 }}% - {{ t.attempted }} attempts)<br>
+                            <span class="text-light" style="font-size:0.85rem;">Great job! Consider occasional revision.</span>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Section C: What Should I Focus on Next? -->
+    {% if priorities %}
+    <div class="card my-4" style="border-left: 4px solid var(--primary);">
+        <h3>What Should I Focus on Next?</h3>
+        <p class="mb-4 text-light">Based on your entire learning history, prerequisites, and recent trends, here are your top priorities:</p>
+        <div style="display:flex; flex-direction:column; gap:1rem;">
+            {% for p in priorities|slice:":3" %}
+                <div style="padding:1rem; border-radius:0.5rem; background:var(--bg); border-left:4px solid {% if p.rank == 0 %}var(--error){% elif p.rank == 1 %}var(--warning){% elif p.rank == 2 %}var(--success){% else %}var(--text-light){% endif %};">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <strong>{{ p.concept.name }}</strong>
+                        <span class="badge" style="background:{% if p.rank == 0 %}var(--error){% elif p.rank == 1 %}var(--warning){% elif p.rank == 2 %}var(--success){% else %}var(--text-light){% endif %}; color:#fff;">
+                            {{ p.category }}
+                        </span>
+                    </div>
+                    <p style="margin:0.5rem 0; font-size:0.9rem; color:var(--text-light);">Historical Accuracy: {{ p.accuracy }}% | {{ p.reason }}</p>
+                    <div style="display:flex; gap:0.5rem; margin-top:0.5rem;">
+                        {% if p.category == 'Study First' or p.category == 'Study Next' %}
+                            <a href="{% url 'learning:lesson' p.concept.concept_id %}" class="btn btn-small btn-primary">📚 Study Now</a>
+                        {% else %}
+                            <a href="{% url 'learning:practice' p.concept.concept_id %}" class="btn btn-small btn-secondary">✏️ Practise Now</a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div style="margin-top:1.5rem; text-align:center;">
+            <a href="{% url 'progress:history' %}" class="btn btn-secondary">📈 View Full Progress History</a>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Section D: Review Your Answers -->
+    {% if incorrect_responses %}
+    <div class="card my-4">
+        <h3>Review Your Incorrect Answers</h3>
+        {% for r in incorrect_responses %}
+        <div style="background: var(--bg); padding: 1rem; border-radius: 0.5rem; margin-top: 1rem; border-left: 4px solid var(--error);">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem;">
+                <div>
+                    <p><strong>Question:</strong> {{ r.question.text }}</p>
+                    <p style="color: var(--error);"><strong>Your Answer:</strong> {{ r.response_text }}</p>
+                    <p style="color: var(--success);"><strong>Correct Answer:</strong> {{ r.question.correct_answer }}</p>
+                    <p style="color: var(--text-light); font-size:0.9rem;"><strong>Topic:</strong> {{ r.question.concept.name }}</p>
+                </div>
+                <div>
+                    <form method="POST" action="{% url 'assistant:explain_mistake' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="question_id" value="{{ r.question.question_id }}">
+                        <input type="hidden" name="student_answer" value="{{ r.response_text }}">
+                        <button type="submit" class="btn btn-small btn-secondary" style="border-radius:2rem;">🤖 Explain My Mistake</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Section E: Misconception Detection -->
+    <div class="card my-4">
+        <h3>Systematic Misconception Detection</h3>
+        <p class="mb-4 text-light">Evidence-based detection of common mathematical error patterns.</p>
+        
+        {% if misconceptions %}
+            <div style="display:flex; flex-direction:column; gap:1.5rem;">
+            {% for mc in misconceptions %}
+                <div style="background:var(--surface); border:1px solid {% if mc.confidence == 'Confirmed' %}var(--error){% else %}var(--warning){% endif %}; padding:1.5rem; border-radius:0.5rem; box-shadow:0 4px 6px -1px rgba(0,0,0,0.1);">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+                        <h4 style="margin:0; color:var(--text); font-size:1.1rem;">⚠️ {{ mc.name }}</h4>
+                        <span class="badge" style="background:{% if mc.confidence == 'Confirmed' %}var(--error){% else %}var(--warning){% endif %}; color:#fff;">{{ mc.confidence }}</span>
+                    </div>
+                    <p style="margin-bottom:1rem; font-weight:bold; color:var(--text-light);">{{ mc.explanation }}</p>
+                    
+                    <div style="background:#f8fafc; padding:1rem; border-radius:0.5rem; font-family:monospace; margin-bottom:1rem; border-left:4px solid var(--primary);">
+                        <strong>Question:</strong> {{ mc.example_r.question.question_text }}<br>
+                        <strong>Your Answer:</strong> <span style="color:var(--error);">{{ mc.example_r.response_text }}</span><br>
+                        <strong>Correct Answer:</strong> <span style="color:var(--success);">{{ mc.example_r.question.correct_answer }}</span>
+                    </div>
+                    
+                    <div style="display:flex; justify-content:flex-end;">
+                        <a href="{% url 'learning:lesson' mc.example_r.question.concept.concept_id %}" class="btn btn-small btn-primary">📖 Review the Rule</a>
+                        <a href="{% url 'learning:practice' mc.example_r.question.concept.concept_id %}" class="btn btn-small btn-secondary" style="margin-left:0.5rem;">✏️ Practice This</a>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-light">No systematic mathematical misconceptions detected yet.</p>
+        {% endif %}
+    </div>
+
+    <!-- Section F: Prerequisite Diagnosis (Root Cause Engine) -->
+    <div class="card my-4" style="background: #fafaf9;">
+        <h3 style="display:flex; align-items:center; gap:0.5rem;">
+            <span>🔍</span> Deeper Diagnostic Analysis
+        </h3>
+        
+        {% if result.abstention_reason %}
+            <div style="margin-top:1rem;">
+                <p><strong>Deeper Diagnosis Not Possible Yet</strong></p>
+                <p style="color: var(--text-light);">{{ result.abstention_reason }}</p>
+                <p>We need more evidence of related prerequisite mistakes to identify a specific foundational root cause.</p>
+                <div class="actions mt-4">
+                    <p>Help the Concept Dependency Detective by answering a targeted follow-up question.</p>
+                    <a href="{% url 'quizzes:start_quiz' %}" class="btn btn-primary">🎯 Take Follow-up Question</a>
+                </div>
+            </div>
+        {% else %}
+            <div style="margin-top:1rem;">
+                <p>Our engine analyzed your mistakes against the math prerequisite tree. Your difficulty with {{ topics.0.concept.name }} might actually stem from a foundational gap in:</p>
+                <h4 class="text-primary">{{ result.candidate_concept_name }}</h4>
+                <p>Confidence: <span class="badge badge-{{ result.confidence }}">{{ result.confidence|title }}</span></p>
+                
+                <div class="evidence-box my-3">
+                    <h5>Supporting Evidence:</h5>
+                    <ul>
+                        {% for ev in result.evidence %}
+                            <li>{{ ev }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                
+                <div class="actions mt-4">
+                    <p>We recommend starting with a targeted lesson on this foundational prerequisite.</p>
+                    <a href="{% url 'learning:lesson' concept_id=result.candidate_concept_id %}" class="btn btn-primary">Start Foundational Lesson</a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Section G: Prerequisite Gap Detective -->
+    {% if gap_reports %}
+    <div class="card my-4" style="border-left: 4px solid var(--warning);">
+        <h2>Find and Fix Your Prerequisite Gaps</h2>
+        <p class="mb-4 text-light">When you struggle with an advanced topic, the best strategy is often to step back and revise its foundational building blocks.</p>
+        
+        <div style="display:flex; flex-direction:column; gap:2rem;">
+        {% for gr in gap_reports %}
+            <div style="background:var(--surface); border:1px solid var(--border); padding:1.5rem; border-radius:0.5rem;">
+                <h4>Let's fix your difficulty with <span class="text-primary">{{ gr.target.name }}</span></h4>
+                <p style="font-size:0.9rem; color:var(--text-light); margin-bottom:1rem;">
+                    <strong>Evidence:</strong> You scored {{ gr.target_stats.correct }} correct and {{ gr.target_stats.incorrect }} wrong out of {{ gr.target_stats.attempted }} attempts in this quiz.
+                </p>
+                
+                {% if gr.earliest_gap %}
+                    <p>
+                        Your results suggest that you may need more practice with <strong>{{ gr.earliest_gap.concept.name }}</strong> before attempting {{ gr.target.name }} again. 
+                    </p>
+                    <p style="font-size:0.9rem; font-style:italic; margin-bottom:1.5rem;">
+                        Why study this? {{ gr.earliest_gap.concept.name }} is a prerequisite of {{ gr.target.name }} in our concept map, and your history shows "{{ gr.earliest_gap.label }}".
+                    </p>
+                {% else %}
+                    <p style="margin-bottom:1.5rem;">
+                        You have strong foundations! We couldn't find any weak prerequisites. You just need a bit more practice on {{ gr.target.name }} directly.
+                    </p>
+                {% endif %}
+                
+                <h5>Recommended learning path:</h5>
+                <div style="margin:1rem 0; padding:1rem; background:var(--bg); border-radius:0.5rem; font-family:monospace;">
+                    {% for node in gr.path %}
+                        <div style="display:flex; align-items:center; margin-bottom:0.5rem;">
+                            <span style="display:inline-block; width:12px; height:12px; border-radius:50%; margin-right:10px; background: {% if node.status == 'mastered' %}var(--success){% elif node.status == 'weak' %}var(--error){% elif node.status == 'unassessed' %}var(--warning){% else %}var(--primary){% endif %};"></span>
+                            <span><strong>{{ node.concept.name }}</strong> - <span style="color:var(--text-light);">{{ node.label }} {% if node.status != 'unassessed' and node.label != 'Target' %}({{ node.acc }}% accuracy){% endif %}</span></span>
+                        </div>
+                        {% if not forloop.last %}
+                            <div style="margin-left:5px; border-left:2px solid var(--border); height:15px; margin-bottom:0.5rem;"></div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                
+                <div style="display:flex; gap:0.5rem; margin-top:1.5rem;">
+                    {% if gr.earliest_gap %}
+                        <a href="{% url 'learning:lesson' gr.earliest_gap.concept.concept_id %}" class="btn btn-primary">Study This Concept</a>
+                        <a href="{% url 'learning:practice' gr.earliest_gap.concept.concept_id %}" class="btn btn-secondary">Practise This Concept</a>
+                        {% if gr.earliest_gap.status == 'unassessed' %}
+                            <a href="{% url 'quizzes:start_quiz' %}" class="btn btn-secondary" style="border:1px solid var(--primary);">Check My Understanding</a>
+                        {% endif %}
+                    {% else %}
+                        <a href="{% url 'learning:practice' gr.target.concept_id %}" class="btn btn-primary">Practise Target Concept</a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+        
+        <div style="margin-top:2rem; text-align:center;">
+            <a href="{% url 'progress:study_plan' %}" class="btn btn-primary btn-large">📅 View My Adaptive Study Plan</a>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

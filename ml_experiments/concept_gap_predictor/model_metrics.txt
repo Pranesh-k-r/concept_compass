@@ -1,0 +1,1333 @@
+=== ML CONCEPT GAP PREDICTOR REPORT ===
+
+NOTE: Models evaluated on synthetic data (simulated latent mastery). Results are experimental.
+
+Model: Naive Bayes
+Validation Accuracy: 0.1985
+Test Accuracy: 0.2180 (21.8%)
+Macro Precision: 0.2020
+Macro Recall: 0.2013
+Macro F1-Score: 0.1977
+Confusion Matrix (first 4x4):
+[[78  2  7  7]
+ [ 6 13  1  9]
+ [ 2  2 17  3]
+ [ 5  4  1 28]]
+-Model: Naive Bayes
+Validation Accuracy: 0.1985
+Test Accuracy: 0.2180 (21.8%)
+Macro Precision: 0.2020
+Macro Recall: 0.2013
+Macro F1-Score: 0.1977
+Confusion Matrix (first 4x4):
+[[78  2  7  7]
+ [ 6 13  1  9]
+ [ 2  2 17  3]
+ [ 5  4  1 28]]
+-Model: Naive Bayes
+Validation Accuracy: 0.1985
+Test Accuracy: 0.2180 (21.8%)
+Macro Precision: 0.2020
+Macro Recall: 0.2013
+Macro F1-Score: 0.1977
+Confusion Matrix (first 4x4):
+[[78  2  7  7]
+ [ 6 13  1  9]
+ [ 2  2 17  3]
+ [ 5  4  1 28]]
+-Model: Naive Bayes
+Validation Accuracy: 0.1985
+Test Accuracy: 0.2180 (21.8%)
+Macro Precision: 0.2020
+Macro Recall: 0.2013
+Macro F1-Score: 0.1977
+Confusion Matrix (first 4x4):
+[[78  2  7  7]
+ [ 6 13  1  9]
+ [ 2  2 17  3]
+ [ 5  4  1 28]]
+-Model: Naive Bayes
+Validation Accuracy: 0.1985
+Test Accuracy: 0.2180 (21.8%)
+Macro Precision: 0.2020
+Macro Recall: 0.2013
+Macro F1-Score: 0.1977
+Confusion Matrix (first 4x4):
+[[78  2  7  7]
+ [ 6 13  1  9]
+ [ 2  2 17  3]
+ [ 5  4  1 28]]
+-Model: Naive Bayes
+Validation Accuracy: 0.1985
+Test Accuracy: 0.2180 (21.8%)
+Macro Precision: 0.2020
+Macro Recall: 0.2013
+Macro F1-Score: 0.1977
+Confusion Matrix (first 4x4):
+[[78  2  7  7]
+ [ 6 13  1  9]
+ [ 2  2 17  3]
+ [ 5  4  1 28]]
+-Model: Naive Bayes
+Validation Accuracy: 0.1985
+Test Accuracy: 0.2180 (21.8%)
+Macro Precision: 0.2020
+Macro Recall: 0.2013
+Macro F1-Score: 0.1977
+Confusion Matrix (first 4x4):
+[[78  2  7  7]
+ [ 6 13  1  9]
+ [ 2  2 17  3]
+ [ 5  4  1 28]]
+-Model: Naive Bayes
+Validation Accuracy: 0.1985
+Test Accuracy: 0.2180 (21.8%)
+Macro Precision: 0.2020
+Macro Recall: 0.2013
+Macro F1-Score: 0.1977
+Confusion Matrix (first 4x4):
+[[78  2  7  7]
+ [ 6 13  1  9]
+ [ 2  2 17  3]
+ [ 5  4  1 28]]
+-Model: Naive Bayes
+Validation Accuracy: 0.1985
+Test Accuracy: 0.2180 (21.8%)
+Macro Precision: 0.2020
+Macro Recall: 0.2013
+Macro F1-Score: 0.1977
+Confusion Matrix (first 4x4):
+[[78  2  7  7]
+ [ 6 13  1  9]
+ [ 2  2 17  3]
+ [ 5  4  1 28]]
+-Model: Naive Bayes
+Validation Accuracy: 0.1985
+Test Accuracy: 0.2180 (21.8%)
+Macro Precision: 0.2020
+Macro Recall: 0.2013
+Macro F1-Score: 0.1977
+Confusion Matrix (first 4x4):
+[[78  2  7  7]
+ [ 6 13  1  9]
+ [ 2  2 17  3]
+ [ 5  4  1 28]]
+-Model: Naive Bayes
+Validation Accuracy: 0.1985
+Test Accuracy: 0.2180 (21.8%)
+Macro Precision: 0.2020
+Macro Recall: 0.2013
+Macro F1-Score: 0.1977
+Confusion Matrix (first 4x4):
+[[78  2  7  7]
+ [ 6 13  1  9]
+ [ 2  2 17  3]
+ [ 5  4  1 28]]
+-Model: Naive Bayes
+Validation Accuracy: 0.1985
+Test Accuracy: 0.2180 (21.8%)
+Macro Precision: 0.2020
+Macro Recall: 0.2013
+Macro F1-Score: 0.1977
+Confusion Matrix (first 4x4):
+[[78  2  7  7]
+ [ 6 13  1  9]
+ [ 2  2 17  3]
+ [ 5  4  1 28]]
+-Model: Naive Bayes
+Validation Accuracy: 0.1985
+Test Accuracy: 0.2180 (21.8%)
+Macro Precision: 0.2020
+Macro Recall: 0.2013
+Macro F1-Score: 0.1977
+Confusion Matrix (first 4x4):
+[[78  2  7  7]
+ [ 6 13  1  9]
+ [ 2  2 17  3]
+ [ 5  4  1 28]]
+-Model: Naive Bayes
+Validation Accuracy: 0.1985
+Test Accuracy: 0.2180 (21.8%)
+Macro Precision: 0.2020
+Macro Recall: 0.2013
+Macro F1-Score: 0.1977
+Confusion Matrix (first 4x4):
+[[78  2  7  7]
+ [ 6 13  1  9]
+ [ 2  2 17  3]
+ [ 5  4  1 28]]
+-Model: Naive Bayes
+Validation Accuracy: 0.1985
+Test Accuracy: 0.2180 (21.8%)
+Macro Precision: 0.2020
+Macro Recall: 0.2013
+Macro F1-Score: 0.1977
+Confusion Matrix (first 4x4):
+[[78  2  7  7]
+ [ 6 13  1  9]
+ [ 2  2 17  3]
+ [ 5  4  1 28]]
+-Model: Naive Bayes
+Validation Accuracy: 0.1985
+Test Accuracy: 0.2180 (21.8%)
+Macro Precision: 0.2020
+Macro Recall: 0.2013
+Macro F1-Score: 0.1977
+Confusion Matrix (first 4x4):
+[[78  2  7  7]
+ [ 6 13  1  9]
+ [ 2  2 17  3]
+ [ 5  4  1 28]]
+-Model: Naive Bayes
+Validation Accuracy: 0.1985
+Test Accuracy: 0.2180 (21.8%)
+Macro Precision: 0.2020
+Macro Recall: 0.2013
+Macro F1-Score: 0.1977
+Confusion Matrix (first 4x4):
+[[78  2  7  7]
+ [ 6 13  1  9]
+ [ 2  2 17  3]
+ [ 5  4  1 28]]
+-Model: Naive Bayes
+Validation Accuracy: 0.1985
+Test Accuracy: 0.2180 (21.8%)
+Macro Precision: 0.2020
+Macro Recall: 0.2013
+Macro F1-Score: 0.1977
+Confusion Matrix (first 4x4):
+[[78  2  7  7]
+ [ 6 13  1  9]
+ [ 2  2 17  3]
+ [ 5  4  1 28]]
+-Model: Naive Bayes
+Validation Accuracy: 0.1985
+Test Accuracy: 0.2180 (21.8%)
+Macro Precision: 0.2020
+Macro Recall: 0.2013
+Macro F1-Score: 0.1977
+Confusion Matrix (first 4x4):
+[[78  2  7  7]
+ [ 6 13  1  9]
+ [ 2  2 17  3]
+ [ 5  4  1 28]]
+-Model: Naive Bayes
+Validation Accuracy: 0.1985
+Test Accuracy: 0.2180 (21.8%)
+Macro Precision: 0.2020
+Macro Recall: 0.2013
+Macro F1-Score: 0.1977
+Confusion Matrix (first 4x4):
+[[78  2  7  7]
+ [ 6 13  1  9]
+ [ 2  2 17  3]
+ [ 5  4  1 28]]
+-Model: Naive Bayes
+Validation Accuracy: 0.1985
+Test Accuracy: 0.2180 (21.8%)
+Macro Precision: 0.2020
+Macro Recall: 0.2013
+Macro F1-Score: 0.1977
+Confusion Matrix (first 4x4):
+[[78  2  7  7]
+ [ 6 13  1  9]
+ [ 2  2 17  3]
+ [ 5  4  1 28]]
+-Model: Naive Bayes
+Validation Accuracy: 0.1985
+Test Accuracy: 0.2180 (21.8%)
+Macro Precision: 0.2020
+Macro Recall: 0.2013
+Macro F1-Score: 0.1977
+Confusion Matrix (first 4x4):
+[[78  2  7  7]
+ [ 6 13  1  9]
+ [ 2  2 17  3]
+ [ 5  4  1 28]]
+-Model: Naive Bayes
+Validation Accuracy: 0.1985
+Test Accuracy: 0.2180 (21.8%)
+Macro Precision: 0.2020
+Macro Recall: 0.2013
+Macro F1-Score: 0.1977
+Confusion Matrix (first 4x4):
+[[78  2  7  7]
+ [ 6 13  1  9]
+ [ 2  2 17  3]
+ [ 5  4  1 28]]
+-Model: Naive Bayes
+Validation Accuracy: 0.1985
+Test Accuracy: 0.2180 (21.8%)
+Macro Precision: 0.2020
+Macro Recall: 0.2013
+Macro F1-Score: 0.1977
+Confusion Matrix (first 4x4):
+[[78  2  7  7]
+ [ 6 13  1  9]
+ [ 2  2 17  3]
+ [ 5  4  1 28]]
+-Model: Naive Bayes
+Validation Accuracy: 0.1985
+Test Accuracy: 0.2180 (21.8%)
+Macro Precision: 0.2020
+Macro Recall: 0.2013
+Macro F1-Score: 0.1977
+Confusion Matrix (first 4x4):
+[[78  2  7  7]
+ [ 6 13  1  9]
+ [ 2  2 17  3]
+ [ 5  4  1 28]]
+-Model: Naive Bayes
+Validation Accuracy: 0.1985
+Test Accuracy: 0.2180 (21.8%)
+Macro Precision: 0.2020
+Macro Recall: 0.2013
+Macro F1-Score: 0.1977
+Confusion Matrix (first 4x4):
+[[78  2  7  7]
+ [ 6 13  1  9]
+ [ 2  2 17  3]
+ [ 5  4  1 28]]
+-Model: Naive Bayes
+Validation Accuracy: 0.1985
+Test Accuracy: 0.2180 (21.8%)
+Macro Precision: 0.2020
+Macro Recall: 0.2013
+Macro F1-Score: 0.1977
+Confusion Matrix (first 4x4):
+[[78  2  7  7]
+ [ 6 13  1  9]
+ [ 2  2 17  3]
+ [ 5  4  1 28]]
+-Model: Naive Bayes
+Validation Accuracy: 0.1985
+Test Accuracy: 0.2180 (21.8%)
+Macro Precision: 0.2020
+Macro Recall: 0.2013
+Macro F1-Score: 0.1977
+Confusion Matrix (first 4x4):
+[[78  2  7  7]
+ [ 6 13  1  9]
+ [ 2  2 17  3]
+ [ 5  4  1 28]]
+-Model: Naive Bayes
+Validation Accuracy: 0.1985
+Test Accuracy: 0.2180 (21.8%)
+Macro Precision: 0.2020
+Macro Recall: 0.2013
+Macro F1-Score: 0.1977
+Confusion Matrix (first 4x4):
+[[78  2  7  7]
+ [ 6 13  1  9]
+ [ 2  2 17  3]
+ [ 5  4  1 28]]
+-Model: Naive Bayes
+Validation Accuracy: 0.1985
+Test Accuracy: 0.2180 (21.8%)
+Macro Precision: 0.2020
+Macro Recall: 0.2013
+Macro F1-Score: 0.1977
+Confusion Matrix (first 4x4):
+[[78  2  7  7]
+ [ 6 13  1  9]
+ [ 2  2 17  3]
+ [ 5  4  1 28]]
+-Model: Naive Bayes
+Validation Accuracy: 0.1985
+Test Accuracy: 0.2180 (21.8%)
+Macro Precision: 0.2020
+Macro Recall: 0.2013
+Macro F1-Score: 0.1977
+Confusion Matrix (first 4x4):
+[[78  2  7  7]
+ [ 6 13  1  9]
+ [ 2  2 17  3]
+ [ 5  4  1 28]]
+-Model: Naive Bayes
+Validation Accuracy: 0.1985
+Test Accuracy: 0.2180 (21.8%)
+Macro Precision: 0.2020
+Macro Recall: 0.2013
+Macro F1-Score: 0.1977
+Confusion Matrix (first 4x4):
+[[78  2  7  7]
+ [ 6 13  1  9]
+ [ 2  2 17  3]
+ [ 5  4  1 28]]
+-Model: Naive Bayes
+Validation Accuracy: 0.1985
+Test Accuracy: 0.2180 (21.8%)
+Macro Precision: 0.2020
+Macro Recall: 0.2013
+Macro F1-Score: 0.1977
+Confusion Matrix (first 4x4):
+[[78  2  7  7]
+ [ 6 13  1  9]
+ [ 2  2 17  3]
+ [ 5  4  1 28]]
+-Model: Naive Bayes
+Validation Accuracy: 0.1985
+Test Accuracy: 0.2180 (21.8%)
+Macro Precision: 0.2020
+Macro Recall: 0.2013
+Macro F1-Score: 0.1977
+Confusion Matrix (first 4x4):
+[[78  2  7  7]
+ [ 6 13  1  9]
+ [ 2  2 17  3]
+ [ 5  4  1 28]]
+-Model: Naive Bayes
+Validation Accuracy: 0.1985
+Test Accuracy: 0.2180 (21.8%)
+Macro Precision: 0.2020
+Macro Recall: 0.2013
+Macro F1-Score: 0.1977
+Confusion Matrix (first 4x4):
+[[78  2  7  7]
+ [ 6 13  1  9]
+ [ 2  2 17  3]
+ [ 5  4  1 28]]
+-Model: Naive Bayes
+Validation Accuracy: 0.1985
+Test Accuracy: 0.2180 (21.8%)
+Macro Precision: 0.2020
+Macro Recall: 0.2013
+Macro F1-Score: 0.1977
+Confusion Matrix (first 4x4):
+[[78  2  7  7]
+ [ 6 13  1  9]
+ [ 2  2 17  3]
+ [ 5  4  1 28]]
+-Model: Naive Bayes
+Validation Accuracy: 0.1985
+Test Accuracy: 0.2180 (21.8%)
+Macro Precision: 0.2020
+Macro Recall: 0.2013
+Macro F1-Score: 0.1977
+Confusion Matrix (first 4x4):
+[[78  2  7  7]
+ [ 6 13  1  9]
+ [ 2  2 17  3]
+ [ 5  4  1 28]]
+-Model: Naive Bayes
+Validation Accuracy: 0.1985
+Test Accuracy: 0.2180 (21.8%)
+Macro Precision: 0.2020
+Macro Recall: 0.2013
+Macro F1-Score: 0.1977
+Confusion Matrix (first 4x4):
+[[78  2  7  7]
+ [ 6 13  1  9]
+ [ 2  2 17  3]
+ [ 5  4  1 28]]
+-Model: Naive Bayes
+Validation Accuracy: 0.1985
+Test Accuracy: 0.2180 (21.8%)
+Macro Precision: 0.2020
+Macro Recall: 0.2013
+Macro F1-Score: 0.1977
+Confusion Matrix (first 4x4):
+[[78  2  7  7]
+ [ 6 13  1  9]
+ [ 2  2 17  3]
+ [ 5  4  1 28]]
+-Model: Naive Bayes
+Validation Accuracy: 0.1985
+Test Accuracy: 0.2180 (21.8%)
+Macro Precision: 0.2020
+Macro Recall: 0.2013
+Macro F1-Score: 0.1977
+Confusion Matrix (first 4x4):
+[[78  2  7  7]
+ [ 6 13  1  9]
+ [ 2  2 17  3]
+ [ 5  4  1 28]]
+-
+Saved model to naive_bayes.pkl
+
+Model: Decision Tree
+Validation Accuracy: 0.1226
+Test Accuracy: 0.1200 (12.0%)
+Macro Precision: 0.1194
+Macro Recall: 0.1163
+Macro F1-Score: 0.1134
+Confusion Matrix (first 4x4):
+[[29  2 13  3]
+ [ 4  6  4  3]
+ [ 3  0 12  1]
+ [ 0  6  4  8]]
+-Model: Decision Tree
+Validation Accuracy: 0.1226
+Test Accuracy: 0.1200 (12.0%)
+Macro Precision: 0.1194
+Macro Recall: 0.1163
+Macro F1-Score: 0.1134
+Confusion Matrix (first 4x4):
+[[29  2 13  3]
+ [ 4  6  4  3]
+ [ 3  0 12  1]
+ [ 0  6  4  8]]
+-Model: Decision Tree
+Validation Accuracy: 0.1226
+Test Accuracy: 0.1200 (12.0%)
+Macro Precision: 0.1194
+Macro Recall: 0.1163
+Macro F1-Score: 0.1134
+Confusion Matrix (first 4x4):
+[[29  2 13  3]
+ [ 4  6  4  3]
+ [ 3  0 12  1]
+ [ 0  6  4  8]]
+-Model: Decision Tree
+Validation Accuracy: 0.1226
+Test Accuracy: 0.1200 (12.0%)
+Macro Precision: 0.1194
+Macro Recall: 0.1163
+Macro F1-Score: 0.1134
+Confusion Matrix (first 4x4):
+[[29  2 13  3]
+ [ 4  6  4  3]
+ [ 3  0 12  1]
+ [ 0  6  4  8]]
+-Model: Decision Tree
+Validation Accuracy: 0.1226
+Test Accuracy: 0.1200 (12.0%)
+Macro Precision: 0.1194
+Macro Recall: 0.1163
+Macro F1-Score: 0.1134
+Confusion Matrix (first 4x4):
+[[29  2 13  3]
+ [ 4  6  4  3]
+ [ 3  0 12  1]
+ [ 0  6  4  8]]
+-Model: Decision Tree
+Validation Accuracy: 0.1226
+Test Accuracy: 0.1200 (12.0%)
+Macro Precision: 0.1194
+Macro Recall: 0.1163
+Macro F1-Score: 0.1134
+Confusion Matrix (first 4x4):
+[[29  2 13  3]
+ [ 4  6  4  3]
+ [ 3  0 12  1]
+ [ 0  6  4  8]]
+-Model: Decision Tree
+Validation Accuracy: 0.1226
+Test Accuracy: 0.1200 (12.0%)
+Macro Precision: 0.1194
+Macro Recall: 0.1163
+Macro F1-Score: 0.1134
+Confusion Matrix (first 4x4):
+[[29  2 13  3]
+ [ 4  6  4  3]
+ [ 3  0 12  1]
+ [ 0  6  4  8]]
+-Model: Decision Tree
+Validation Accuracy: 0.1226
+Test Accuracy: 0.1200 (12.0%)
+Macro Precision: 0.1194
+Macro Recall: 0.1163
+Macro F1-Score: 0.1134
+Confusion Matrix (first 4x4):
+[[29  2 13  3]
+ [ 4  6  4  3]
+ [ 3  0 12  1]
+ [ 0  6  4  8]]
+-Model: Decision Tree
+Validation Accuracy: 0.1226
+Test Accuracy: 0.1200 (12.0%)
+Macro Precision: 0.1194
+Macro Recall: 0.1163
+Macro F1-Score: 0.1134
+Confusion Matrix (first 4x4):
+[[29  2 13  3]
+ [ 4  6  4  3]
+ [ 3  0 12  1]
+ [ 0  6  4  8]]
+-Model: Decision Tree
+Validation Accuracy: 0.1226
+Test Accuracy: 0.1200 (12.0%)
+Macro Precision: 0.1194
+Macro Recall: 0.1163
+Macro F1-Score: 0.1134
+Confusion Matrix (first 4x4):
+[[29  2 13  3]
+ [ 4  6  4  3]
+ [ 3  0 12  1]
+ [ 0  6  4  8]]
+-Model: Decision Tree
+Validation Accuracy: 0.1226
+Test Accuracy: 0.1200 (12.0%)
+Macro Precision: 0.1194
+Macro Recall: 0.1163
+Macro F1-Score: 0.1134
+Confusion Matrix (first 4x4):
+[[29  2 13  3]
+ [ 4  6  4  3]
+ [ 3  0 12  1]
+ [ 0  6  4  8]]
+-Model: Decision Tree
+Validation Accuracy: 0.1226
+Test Accuracy: 0.1200 (12.0%)
+Macro Precision: 0.1194
+Macro Recall: 0.1163
+Macro F1-Score: 0.1134
+Confusion Matrix (first 4x4):
+[[29  2 13  3]
+ [ 4  6  4  3]
+ [ 3  0 12  1]
+ [ 0  6  4  8]]
+-Model: Decision Tree
+Validation Accuracy: 0.1226
+Test Accuracy: 0.1200 (12.0%)
+Macro Precision: 0.1194
+Macro Recall: 0.1163
+Macro F1-Score: 0.1134
+Confusion Matrix (first 4x4):
+[[29  2 13  3]
+ [ 4  6  4  3]
+ [ 3  0 12  1]
+ [ 0  6  4  8]]
+-Model: Decision Tree
+Validation Accuracy: 0.1226
+Test Accuracy: 0.1200 (12.0%)
+Macro Precision: 0.1194
+Macro Recall: 0.1163
+Macro F1-Score: 0.1134
+Confusion Matrix (first 4x4):
+[[29  2 13  3]
+ [ 4  6  4  3]
+ [ 3  0 12  1]
+ [ 0  6  4  8]]
+-Model: Decision Tree
+Validation Accuracy: 0.1226
+Test Accuracy: 0.1200 (12.0%)
+Macro Precision: 0.1194
+Macro Recall: 0.1163
+Macro F1-Score: 0.1134
+Confusion Matrix (first 4x4):
+[[29  2 13  3]
+ [ 4  6  4  3]
+ [ 3  0 12  1]
+ [ 0  6  4  8]]
+-Model: Decision Tree
+Validation Accuracy: 0.1226
+Test Accuracy: 0.1200 (12.0%)
+Macro Precision: 0.1194
+Macro Recall: 0.1163
+Macro F1-Score: 0.1134
+Confusion Matrix (first 4x4):
+[[29  2 13  3]
+ [ 4  6  4  3]
+ [ 3  0 12  1]
+ [ 0  6  4  8]]
+-Model: Decision Tree
+Validation Accuracy: 0.1226
+Test Accuracy: 0.1200 (12.0%)
+Macro Precision: 0.1194
+Macro Recall: 0.1163
+Macro F1-Score: 0.1134
+Confusion Matrix (first 4x4):
+[[29  2 13  3]
+ [ 4  6  4  3]
+ [ 3  0 12  1]
+ [ 0  6  4  8]]
+-Model: Decision Tree
+Validation Accuracy: 0.1226
+Test Accuracy: 0.1200 (12.0%)
+Macro Precision: 0.1194
+Macro Recall: 0.1163
+Macro F1-Score: 0.1134
+Confusion Matrix (first 4x4):
+[[29  2 13  3]
+ [ 4  6  4  3]
+ [ 3  0 12  1]
+ [ 0  6  4  8]]
+-Model: Decision Tree
+Validation Accuracy: 0.1226
+Test Accuracy: 0.1200 (12.0%)
+Macro Precision: 0.1194
+Macro Recall: 0.1163
+Macro F1-Score: 0.1134
+Confusion Matrix (first 4x4):
+[[29  2 13  3]
+ [ 4  6  4  3]
+ [ 3  0 12  1]
+ [ 0  6  4  8]]
+-Model: Decision Tree
+Validation Accuracy: 0.1226
+Test Accuracy: 0.1200 (12.0%)
+Macro Precision: 0.1194
+Macro Recall: 0.1163
+Macro F1-Score: 0.1134
+Confusion Matrix (first 4x4):
+[[29  2 13  3]
+ [ 4  6  4  3]
+ [ 3  0 12  1]
+ [ 0  6  4  8]]
+-Model: Decision Tree
+Validation Accuracy: 0.1226
+Test Accuracy: 0.1200 (12.0%)
+Macro Precision: 0.1194
+Macro Recall: 0.1163
+Macro F1-Score: 0.1134
+Confusion Matrix (first 4x4):
+[[29  2 13  3]
+ [ 4  6  4  3]
+ [ 3  0 12  1]
+ [ 0  6  4  8]]
+-Model: Decision Tree
+Validation Accuracy: 0.1226
+Test Accuracy: 0.1200 (12.0%)
+Macro Precision: 0.1194
+Macro Recall: 0.1163
+Macro F1-Score: 0.1134
+Confusion Matrix (first 4x4):
+[[29  2 13  3]
+ [ 4  6  4  3]
+ [ 3  0 12  1]
+ [ 0  6  4  8]]
+-Model: Decision Tree
+Validation Accuracy: 0.1226
+Test Accuracy: 0.1200 (12.0%)
+Macro Precision: 0.1194
+Macro Recall: 0.1163
+Macro F1-Score: 0.1134
+Confusion Matrix (first 4x4):
+[[29  2 13  3]
+ [ 4  6  4  3]
+ [ 3  0 12  1]
+ [ 0  6  4  8]]
+-Model: Decision Tree
+Validation Accuracy: 0.1226
+Test Accuracy: 0.1200 (12.0%)
+Macro Precision: 0.1194
+Macro Recall: 0.1163
+Macro F1-Score: 0.1134
+Confusion Matrix (first 4x4):
+[[29  2 13  3]
+ [ 4  6  4  3]
+ [ 3  0 12  1]
+ [ 0  6  4  8]]
+-Model: Decision Tree
+Validation Accuracy: 0.1226
+Test Accuracy: 0.1200 (12.0%)
+Macro Precision: 0.1194
+Macro Recall: 0.1163
+Macro F1-Score: 0.1134
+Confusion Matrix (first 4x4):
+[[29  2 13  3]
+ [ 4  6  4  3]
+ [ 3  0 12  1]
+ [ 0  6  4  8]]
+-Model: Decision Tree
+Validation Accuracy: 0.1226
+Test Accuracy: 0.1200 (12.0%)
+Macro Precision: 0.1194
+Macro Recall: 0.1163
+Macro F1-Score: 0.1134
+Confusion Matrix (first 4x4):
+[[29  2 13  3]
+ [ 4  6  4  3]
+ [ 3  0 12  1]
+ [ 0  6  4  8]]
+-Model: Decision Tree
+Validation Accuracy: 0.1226
+Test Accuracy: 0.1200 (12.0%)
+Macro Precision: 0.1194
+Macro Recall: 0.1163
+Macro F1-Score: 0.1134
+Confusion Matrix (first 4x4):
+[[29  2 13  3]
+ [ 4  6  4  3]
+ [ 3  0 12  1]
+ [ 0  6  4  8]]
+-Model: Decision Tree
+Validation Accuracy: 0.1226
+Test Accuracy: 0.1200 (12.0%)
+Macro Precision: 0.1194
+Macro Recall: 0.1163
+Macro F1-Score: 0.1134
+Confusion Matrix (first 4x4):
+[[29  2 13  3]
+ [ 4  6  4  3]
+ [ 3  0 12  1]
+ [ 0  6  4  8]]
+-Model: Decision Tree
+Validation Accuracy: 0.1226
+Test Accuracy: 0.1200 (12.0%)
+Macro Precision: 0.1194
+Macro Recall: 0.1163
+Macro F1-Score: 0.1134
+Confusion Matrix (first 4x4):
+[[29  2 13  3]
+ [ 4  6  4  3]
+ [ 3  0 12  1]
+ [ 0  6  4  8]]
+-Model: Decision Tree
+Validation Accuracy: 0.1226
+Test Accuracy: 0.1200 (12.0%)
+Macro Precision: 0.1194
+Macro Recall: 0.1163
+Macro F1-Score: 0.1134
+Confusion Matrix (first 4x4):
+[[29  2 13  3]
+ [ 4  6  4  3]
+ [ 3  0 12  1]
+ [ 0  6  4  8]]
+-Model: Decision Tree
+Validation Accuracy: 0.1226
+Test Accuracy: 0.1200 (12.0%)
+Macro Precision: 0.1194
+Macro Recall: 0.1163
+Macro F1-Score: 0.1134
+Confusion Matrix (first 4x4):
+[[29  2 13  3]
+ [ 4  6  4  3]
+ [ 3  0 12  1]
+ [ 0  6  4  8]]
+-Model: Decision Tree
+Validation Accuracy: 0.1226
+Test Accuracy: 0.1200 (12.0%)
+Macro Precision: 0.1194
+Macro Recall: 0.1163
+Macro F1-Score: 0.1134
+Confusion Matrix (first 4x4):
+[[29  2 13  3]
+ [ 4  6  4  3]
+ [ 3  0 12  1]
+ [ 0  6  4  8]]
+-Model: Decision Tree
+Validation Accuracy: 0.1226
+Test Accuracy: 0.1200 (12.0%)
+Macro Precision: 0.1194
+Macro Recall: 0.1163
+Macro F1-Score: 0.1134
+Confusion Matrix (first 4x4):
+[[29  2 13  3]
+ [ 4  6  4  3]
+ [ 3  0 12  1]
+ [ 0  6  4  8]]
+-Model: Decision Tree
+Validation Accuracy: 0.1226
+Test Accuracy: 0.1200 (12.0%)
+Macro Precision: 0.1194
+Macro Recall: 0.1163
+Macro F1-Score: 0.1134
+Confusion Matrix (first 4x4):
+[[29  2 13  3]
+ [ 4  6  4  3]
+ [ 3  0 12  1]
+ [ 0  6  4  8]]
+-Model: Decision Tree
+Validation Accuracy: 0.1226
+Test Accuracy: 0.1200 (12.0%)
+Macro Precision: 0.1194
+Macro Recall: 0.1163
+Macro F1-Score: 0.1134
+Confusion Matrix (first 4x4):
+[[29  2 13  3]
+ [ 4  6  4  3]
+ [ 3  0 12  1]
+ [ 0  6  4  8]]
+-Model: Decision Tree
+Validation Accuracy: 0.1226
+Test Accuracy: 0.1200 (12.0%)
+Macro Precision: 0.1194
+Macro Recall: 0.1163
+Macro F1-Score: 0.1134
+Confusion Matrix (first 4x4):
+[[29  2 13  3]
+ [ 4  6  4  3]
+ [ 3  0 12  1]
+ [ 0  6  4  8]]
+-Model: Decision Tree
+Validation Accuracy: 0.1226
+Test Accuracy: 0.1200 (12.0%)
+Macro Precision: 0.1194
+Macro Recall: 0.1163
+Macro F1-Score: 0.1134
+Confusion Matrix (first 4x4):
+[[29  2 13  3]
+ [ 4  6  4  3]
+ [ 3  0 12  1]
+ [ 0  6  4  8]]
+-Model: Decision Tree
+Validation Accuracy: 0.1226
+Test Accuracy: 0.1200 (12.0%)
+Macro Precision: 0.1194
+Macro Recall: 0.1163
+Macro F1-Score: 0.1134
+Confusion Matrix (first 4x4):
+[[29  2 13  3]
+ [ 4  6  4  3]
+ [ 3  0 12  1]
+ [ 0  6  4  8]]
+-Model: Decision Tree
+Validation Accuracy: 0.1226
+Test Accuracy: 0.1200 (12.0%)
+Macro Precision: 0.1194
+Macro Recall: 0.1163
+Macro F1-Score: 0.1134
+Confusion Matrix (first 4x4):
+[[29  2 13  3]
+ [ 4  6  4  3]
+ [ 3  0 12  1]
+ [ 0  6  4  8]]
+-Model: Decision Tree
+Validation Accuracy: 0.1226
+Test Accuracy: 0.1200 (12.0%)
+Macro Precision: 0.1194
+Macro Recall: 0.1163
+Macro F1-Score: 0.1134
+Confusion Matrix (first 4x4):
+[[29  2 13  3]
+ [ 4  6  4  3]
+ [ 3  0 12  1]
+ [ 0  6  4  8]]
+-
+Saved model to decision_tree.pkl
+
+Model: Random Forest
+Validation Accuracy: 0.2105
+Test Accuracy: 0.2127 (21.3%)
+Macro Precision: 0.1861
+Macro Recall: 0.1954
+Macro F1-Score: 0.1821
+Confusion Matrix (first 4x4):
+[[80  5  6  5]
+ [ 5  8  3  8]
+ [ 3  1 10  6]
+ [ 3  4  2 30]]
+-Model: Random Forest
+Validation Accuracy: 0.2105
+Test Accuracy: 0.2127 (21.3%)
+Macro Precision: 0.1861
+Macro Recall: 0.1954
+Macro F1-Score: 0.1821
+Confusion Matrix (first 4x4):
+[[80  5  6  5]
+ [ 5  8  3  8]
+ [ 3  1 10  6]
+ [ 3  4  2 30]]
+-Model: Random Forest
+Validation Accuracy: 0.2105
+Test Accuracy: 0.2127 (21.3%)
+Macro Precision: 0.1861
+Macro Recall: 0.1954
+Macro F1-Score: 0.1821
+Confusion Matrix (first 4x4):
+[[80  5  6  5]
+ [ 5  8  3  8]
+ [ 3  1 10  6]
+ [ 3  4  2 30]]
+-Model: Random Forest
+Validation Accuracy: 0.2105
+Test Accuracy: 0.2127 (21.3%)
+Macro Precision: 0.1861
+Macro Recall: 0.1954
+Macro F1-Score: 0.1821
+Confusion Matrix (first 4x4):
+[[80  5  6  5]
+ [ 5  8  3  8]
+ [ 3  1 10  6]
+ [ 3  4  2 30]]
+-Model: Random Forest
+Validation Accuracy: 0.2105
+Test Accuracy: 0.2127 (21.3%)
+Macro Precision: 0.1861
+Macro Recall: 0.1954
+Macro F1-Score: 0.1821
+Confusion Matrix (first 4x4):
+[[80  5  6  5]
+ [ 5  8  3  8]
+ [ 3  1 10  6]
+ [ 3  4  2 30]]
+-Model: Random Forest
+Validation Accuracy: 0.2105
+Test Accuracy: 0.2127 (21.3%)
+Macro Precision: 0.1861
+Macro Recall: 0.1954
+Macro F1-Score: 0.1821
+Confusion Matrix (first 4x4):
+[[80  5  6  5]
+ [ 5  8  3  8]
+ [ 3  1 10  6]
+ [ 3  4  2 30]]
+-Model: Random Forest
+Validation Accuracy: 0.2105
+Test Accuracy: 0.2127 (21.3%)
+Macro Precision: 0.1861
+Macro Recall: 0.1954
+Macro F1-Score: 0.1821
+Confusion Matrix (first 4x4):
+[[80  5  6  5]
+ [ 5  8  3  8]
+ [ 3  1 10  6]
+ [ 3  4  2 30]]
+-Model: Random Forest
+Validation Accuracy: 0.2105
+Test Accuracy: 0.2127 (21.3%)
+Macro Precision: 0.1861
+Macro Recall: 0.1954
+Macro F1-Score: 0.1821
+Confusion Matrix (first 4x4):
+[[80  5  6  5]
+ [ 5  8  3  8]
+ [ 3  1 10  6]
+ [ 3  4  2 30]]
+-Model: Random Forest
+Validation Accuracy: 0.2105
+Test Accuracy: 0.2127 (21.3%)
+Macro Precision: 0.1861
+Macro Recall: 0.1954
+Macro F1-Score: 0.1821
+Confusion Matrix (first 4x4):
+[[80  5  6  5]
+ [ 5  8  3  8]
+ [ 3  1 10  6]
+ [ 3  4  2 30]]
+-Model: Random Forest
+Validation Accuracy: 0.2105
+Test Accuracy: 0.2127 (21.3%)
+Macro Precision: 0.1861
+Macro Recall: 0.1954
+Macro F1-Score: 0.1821
+Confusion Matrix (first 4x4):
+[[80  5  6  5]
+ [ 5  8  3  8]
+ [ 3  1 10  6]
+ [ 3  4  2 30]]
+-Model: Random Forest
+Validation Accuracy: 0.2105
+Test Accuracy: 0.2127 (21.3%)
+Macro Precision: 0.1861
+Macro Recall: 0.1954
+Macro F1-Score: 0.1821
+Confusion Matrix (first 4x4):
+[[80  5  6  5]
+ [ 5  8  3  8]
+ [ 3  1 10  6]
+ [ 3  4  2 30]]
+-Model: Random Forest
+Validation Accuracy: 0.2105
+Test Accuracy: 0.2127 (21.3%)
+Macro Precision: 0.1861
+Macro Recall: 0.1954
+Macro F1-Score: 0.1821
+Confusion Matrix (first 4x4):
+[[80  5  6  5]
+ [ 5  8  3  8]
+ [ 3  1 10  6]
+ [ 3  4  2 30]]
+-Model: Random Forest
+Validation Accuracy: 0.2105
+Test Accuracy: 0.2127 (21.3%)
+Macro Precision: 0.1861
+Macro Recall: 0.1954
+Macro F1-Score: 0.1821
+Confusion Matrix (first 4x4):
+[[80  5  6  5]
+ [ 5  8  3  8]
+ [ 3  1 10  6]
+ [ 3  4  2 30]]
+-Model: Random Forest
+Validation Accuracy: 0.2105
+Test Accuracy: 0.2127 (21.3%)
+Macro Precision: 0.1861
+Macro Recall: 0.1954
+Macro F1-Score: 0.1821
+Confusion Matrix (first 4x4):
+[[80  5  6  5]
+ [ 5  8  3  8]
+ [ 3  1 10  6]
+ [ 3  4  2 30]]
+-Model: Random Forest
+Validation Accuracy: 0.2105
+Test Accuracy: 0.2127 (21.3%)
+Macro Precision: 0.1861
+Macro Recall: 0.1954
+Macro F1-Score: 0.1821
+Confusion Matrix (first 4x4):
+[[80  5  6  5]
+ [ 5  8  3  8]
+ [ 3  1 10  6]
+ [ 3  4  2 30]]
+-Model: Random Forest
+Validation Accuracy: 0.2105
+Test Accuracy: 0.2127 (21.3%)
+Macro Precision: 0.1861
+Macro Recall: 0.1954
+Macro F1-Score: 0.1821
+Confusion Matrix (first 4x4):
+[[80  5  6  5]
+ [ 5  8  3  8]
+ [ 3  1 10  6]
+ [ 3  4  2 30]]
+-Model: Random Forest
+Validation Accuracy: 0.2105
+Test Accuracy: 0.2127 (21.3%)
+Macro Precision: 0.1861
+Macro Recall: 0.1954
+Macro F1-Score: 0.1821
+Confusion Matrix (first 4x4):
+[[80  5  6  5]
+ [ 5  8  3  8]
+ [ 3  1 10  6]
+ [ 3  4  2 30]]
+-Model: Random Forest
+Validation Accuracy: 0.2105
+Test Accuracy: 0.2127 (21.3%)
+Macro Precision: 0.1861
+Macro Recall: 0.1954
+Macro F1-Score: 0.1821
+Confusion Matrix (first 4x4):
+[[80  5  6  5]
+ [ 5  8  3  8]
+ [ 3  1 10  6]
+ [ 3  4  2 30]]
+-Model: Random Forest
+Validation Accuracy: 0.2105
+Test Accuracy: 0.2127 (21.3%)
+Macro Precision: 0.1861
+Macro Recall: 0.1954
+Macro F1-Score: 0.1821
+Confusion Matrix (first 4x4):
+[[80  5  6  5]
+ [ 5  8  3  8]
+ [ 3  1 10  6]
+ [ 3  4  2 30]]
+-Model: Random Forest
+Validation Accuracy: 0.2105
+Test Accuracy: 0.2127 (21.3%)
+Macro Precision: 0.1861
+Macro Recall: 0.1954
+Macro F1-Score: 0.1821
+Confusion Matrix (first 4x4):
+[[80  5  6  5]
+ [ 5  8  3  8]
+ [ 3  1 10  6]
+ [ 3  4  2 30]]
+-Model: Random Forest
+Validation Accuracy: 0.2105
+Test Accuracy: 0.2127 (21.3%)
+Macro Precision: 0.1861
+Macro Recall: 0.1954
+Macro F1-Score: 0.1821
+Confusion Matrix (first 4x4):
+[[80  5  6  5]
+ [ 5  8  3  8]
+ [ 3  1 10  6]
+ [ 3  4  2 30]]
+-Model: Random Forest
+Validation Accuracy: 0.2105
+Test Accuracy: 0.2127 (21.3%)
+Macro Precision: 0.1861
+Macro Recall: 0.1954
+Macro F1-Score: 0.1821
+Confusion Matrix (first 4x4):
+[[80  5  6  5]
+ [ 5  8  3  8]
+ [ 3  1 10  6]
+ [ 3  4  2 30]]
+-Model: Random Forest
+Validation Accuracy: 0.2105
+Test Accuracy: 0.2127 (21.3%)
+Macro Precision: 0.1861
+Macro Recall: 0.1954
+Macro F1-Score: 0.1821
+Confusion Matrix (first 4x4):
+[[80  5  6  5]
+ [ 5  8  3  8]
+ [ 3  1 10  6]
+ [ 3  4  2 30]]
+-Model: Random Forest
+Validation Accuracy: 0.2105
+Test Accuracy: 0.2127 (21.3%)
+Macro Precision: 0.1861
+Macro Recall: 0.1954
+Macro F1-Score: 0.1821
+Confusion Matrix (first 4x4):
+[[80  5  6  5]
+ [ 5  8  3  8]
+ [ 3  1 10  6]
+ [ 3  4  2 30]]
+-Model: Random Forest
+Validation Accuracy: 0.2105
+Test Accuracy: 0.2127 (21.3%)
+Macro Precision: 0.1861
+Macro Recall: 0.1954
+Macro F1-Score: 0.1821
+Confusion Matrix (first 4x4):
+[[80  5  6  5]
+ [ 5  8  3  8]
+ [ 3  1 10  6]
+ [ 3  4  2 30]]
+-Model: Random Forest
+Validation Accuracy: 0.2105
+Test Accuracy: 0.2127 (21.3%)
+Macro Precision: 0.1861
+Macro Recall: 0.1954
+Macro F1-Score: 0.1821
+Confusion Matrix (first 4x4):
+[[80  5  6  5]
+ [ 5  8  3  8]
+ [ 3  1 10  6]
+ [ 3  4  2 30]]
+-Model: Random Forest
+Validation Accuracy: 0.2105
+Test Accuracy: 0.2127 (21.3%)
+Macro Precision: 0.1861
+Macro Recall: 0.1954
+Macro F1-Score: 0.1821
+Confusion Matrix (first 4x4):
+[[80  5  6  5]
+ [ 5  8  3  8]
+ [ 3  1 10  6]
+ [ 3  4  2 30]]
+-Model: Random Forest
+Validation Accuracy: 0.2105
+Test Accuracy: 0.2127 (21.3%)
+Macro Precision: 0.1861
+Macro Recall: 0.1954
+Macro F1-Score: 0.1821
+Confusion Matrix (first 4x4):
+[[80  5  6  5]
+ [ 5  8  3  8]
+ [ 3  1 10  6]
+ [ 3  4  2 30]]
+-Model: Random Forest
+Validation Accuracy: 0.2105
+Test Accuracy: 0.2127 (21.3%)
+Macro Precision: 0.1861
+Macro Recall: 0.1954
+Macro F1-Score: 0.1821
+Confusion Matrix (first 4x4):
+[[80  5  6  5]
+ [ 5  8  3  8]
+ [ 3  1 10  6]
+ [ 3  4  2 30]]
+-Model: Random Forest
+Validation Accuracy: 0.2105
+Test Accuracy: 0.2127 (21.3%)
+Macro Precision: 0.1861
+Macro Recall: 0.1954
+Macro F1-Score: 0.1821
+Confusion Matrix (first 4x4):
+[[80  5  6  5]
+ [ 5  8  3  8]
+ [ 3  1 10  6]
+ [ 3  4  2 30]]
+-Model: Random Forest
+Validation Accuracy: 0.2105
+Test Accuracy: 0.2127 (21.3%)
+Macro Precision: 0.1861
+Macro Recall: 0.1954
+Macro F1-Score: 0.1821
+Confusion Matrix (first 4x4):
+[[80  5  6  5]
+ [ 5  8  3  8]
+ [ 3  1 10  6]
+ [ 3  4  2 30]]
+-Model: Random Forest
+Validation Accuracy: 0.2105
+Test Accuracy: 0.2127 (21.3%)
+Macro Precision: 0.1861
+Macro Recall: 0.1954
+Macro F1-Score: 0.1821
+Confusion Matrix (first 4x4):
+[[80  5  6  5]
+ [ 5  8  3  8]
+ [ 3  1 10  6]
+ [ 3  4  2 30]]
+-Model: Random Forest
+Validation Accuracy: 0.2105
+Test Accuracy: 0.2127 (21.3%)
+Macro Precision: 0.1861
+Macro Recall: 0.1954
+Macro F1-Score: 0.1821
+Confusion Matrix (first 4x4):
+[[80  5  6  5]
+ [ 5  8  3  8]
+ [ 3  1 10  6]
+ [ 3  4  2 30]]
+-Model: Random Forest
+Validation Accuracy: 0.2105
+Test Accuracy: 0.2127 (21.3%)
+Macro Precision: 0.1861
+Macro Recall: 0.1954
+Macro F1-Score: 0.1821
+Confusion Matrix (first 4x4):
+[[80  5  6  5]
+ [ 5  8  3  8]
+ [ 3  1 10  6]
+ [ 3  4  2 30]]
+-Model: Random Forest
+Validation Accuracy: 0.2105
+Test Accuracy: 0.2127 (21.3%)
+Macro Precision: 0.1861
+Macro Recall: 0.1954
+Macro F1-Score: 0.1821
+Confusion Matrix (first 4x4):
+[[80  5  6  5]
+ [ 5  8  3  8]
+ [ 3  1 10  6]
+ [ 3  4  2 30]]
+-Model: Random Forest
+Validation Accuracy: 0.2105
+Test Accuracy: 0.2127 (21.3%)
+Macro Precision: 0.1861
+Macro Recall: 0.1954
+Macro F1-Score: 0.1821
+Confusion Matrix (first 4x4):
+[[80  5  6  5]
+ [ 5  8  3  8]
+ [ 3  1 10  6]
+ [ 3  4  2 30]]
+-Model: Random Forest
+Validation Accuracy: 0.2105
+Test Accuracy: 0.2127 (21.3%)
+Macro Precision: 0.1861
+Macro Recall: 0.1954
+Macro F1-Score: 0.1821
+Confusion Matrix (first 4x4):
+[[80  5  6  5]
+ [ 5  8  3  8]
+ [ 3  1 10  6]
+ [ 3  4  2 30]]
+-Model: Random Forest
+Validation Accuracy: 0.2105
+Test Accuracy: 0.2127 (21.3%)
+Macro Precision: 0.1861
+Macro Recall: 0.1954
+Macro F1-Score: 0.1821
+Confusion Matrix (first 4x4):
+[[80  5  6  5]
+ [ 5  8  3  8]
+ [ 3  1 10  6]
+ [ 3  4  2 30]]
+-Model: Random Forest
+Validation Accuracy: 0.2105
+Test Accuracy: 0.2127 (21.3%)
+Macro Precision: 0.1861
+Macro Recall: 0.1954
+Macro F1-Score: 0.1821
+Confusion Matrix (first 4x4):
+[[80  5  6  5]
+ [ 5  8  3  8]
+ [ 3  1 10  6]
+ [ 3  4  2 30]]
+-Model: Random Forest
+Validation Accuracy: 0.2105
+Test Accuracy: 0.2127 (21.3%)
+Macro Precision: 0.1861
+Macro Recall: 0.1954
+Macro F1-Score: 0.1821
+Confusion Matrix (first 4x4):
+[[80  5  6  5]
+ [ 5  8  3  8]
+ [ 3  1 10  6]
+ [ 3  4  2 30]]
+-
+Saved model to random_forest.pkl
+

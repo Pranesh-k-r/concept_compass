@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block title %}My Personalized Study Plan - Concept Compass{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="card mb-4" style="border-left: 4px solid var(--primary);">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+            <div>
+                <h2>My Personalized Study Plan</h2>
+                <p class="text-light">Your customized path based on recent quizzes and prerequisite analysis.</p>
+                <div style="display:flex; gap:0.5rem; margin-top:0.5rem;">
+                    <a href="?subject=Mathematics" class="btn btn-small {% if current_subject == 'Mathematics' %}btn-primary{% else %}btn-secondary{% endif %}">📐 Mathematics</a>
+                    <a href="?subject=English" class="btn btn-small {% if current_subject == 'English' %}btn-primary{% else %}btn-secondary{% endif %}">📚 English</a>
+                </div>
+            </div>
+            <div style="background:var(--surface); padding:1rem; border-radius:0.5rem; border:1px solid var(--border);">
+                <form method="POST" action="{% url 'progress:study_plan' %}" style="display:flex; align-items:center; gap:1rem;">
+                    <input type="hidden" name="subject" value="{{ current_subject }}">
+                    {% csrf_token %}
+                    <label for="time_budget" style="font-weight:600;">Daily Goal:</label>
+                    <select name="time_budget" id="time_budget" class="form-control" style="width:auto;" onchange="this.form.submit()">
+                        <option value="15" {% if plan.daily_time_budget == 15 %}selected{% endif %}>15 mins</option>
+                        <option value="30" {% if plan.daily_time_budget == 30 %}selected{% endif %}>30 mins</option>
+                        <option value="45" {% if plan.daily_time_budget == 45 %}selected{% endif %}>45 mins</option>
+                    </select>
+                </form>
+            </div>
+        </div>
+
+        <div style="margin-top:2rem;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem;">
+                <span style="font-weight:600;">Overall Progress</span>
+                <span style="font-weight:600; color:var(--primary);">{{ completed_tasks }} / {{ total_tasks }} Tasks ({{ progress_percentage }}%)</span>
+            </div>
+            <div style="width: 100%; height: 10px; background: var(--border); border-radius: 5px; overflow: hidden;">
+                <div style="width: {{ progress_percentage }}%; height: 100%; background: var(--primary); transition: width 0.3s ease;"></div>
+            </div>
+        </div>
+    </div>
+
+    {% if total_tasks == 0 %}
+    <div class="card text-center py-5">
+        <h3 class="mb-3">No Active Plan</h3>
+        <p class="text-light mb-4">You haven't taken any quizzes yet, or you've completed all your recommendations!</p>
+        <a href="{% url 'quizzes:start_quiz' %}" class="btn btn-primary btn-large">🎯 Take a Diagnostic Quiz</a>
+    </div>
+    {% else %}
+    <div class="row">
+        <div class="col-md-8">
+            <h3 class="mb-4">Today's Learning Tasks</h3>
+            
+            <div style="display:flex; flex-direction:column; gap:1rem;">
+                {% for task in tasks %}
+                <div class="card" style="border-left: 4px solid {% if task.status == 'COMPLETED' %}var(--success){% elif task.priority == 'High' %}var(--error){% else %}var(--warning){% endif %}; opacity: {% if task.status == 'COMPLETED' %}0.7{% else %}1{% endif %};">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1rem;">
+                        <div style="flex:1;">
+                            <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">
+                                <span class="badge {% if task.status == 'COMPLETED' %}badge-success{% else %}badge-primary{% endif %}">Step {{ forloop.counter }}</span>
+                                <span class="badge" style="background:var(--bg); border:1px solid var(--border);">⏱️ {{ task.estimated_duration }} mins</span>
+                                <span class="badge" style="background:var(--bg); border:1px solid var(--border);">⭐ {{ task.priority }} Priority</span>
+                            </div>
+                            <h4 style="margin:0.5rem 0;">{{ task.get_task_type_display }}: <span class="text-primary">{{ task.concept.name }}</span></h4>
+                            <p style="color:var(--text-light); font-size:0.95rem;">{{ task.explanation }}</p>
+                        </div>
+                        
+                        <div style="display:flex; flex-direction:column; gap:0.5rem; min-width: 150px;">
+                            {% if task.status == 'COMPLETED' %}
+                                <button class="btn btn-secondary" disabled>✅ Completed</button>
+                            {% else %}
+                                {% if task.task_type == 'LEARN' %}
+                                    <a href="{% url 'learning:lesson' task.concept.concept_id %}" target="_blank" class="btn btn-primary">📖 Study Now</a>
+                                {% elif task.task_type == 'PRACTICE' %}
+                                    <a href="{% url 'learning:practice' task.concept.concept_id %}" target="_blank" class="btn btn-secondary">✏️ Practise Now</a>
+                                {% elif task.task_type == 'DIAGNOSTIC' %}
+                                    <a href="{% url 'quizzes:start_quiz' %}" target="_blank" class="btn btn-primary">🎯 Check Understanding</a>
+                                {% else %}
+                                    <a href="{% url 'quizzes:start_quiz' %}" target="_blank" class="btn btn-primary">🎯 Verify Mastery</a>
+                                {% endif %}
+                                
+                                <form method="POST" action="{% url 'progress:mark_task_complete' task.id %}" style="margin:0;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn" style="width:100%; border:1px solid var(--border); background:var(--surface);">Mark as Complete</button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <h4>Learning Path Logic</h4>
+                <p class="text-light" style="font-size:0.9rem;">We map out tasks by checking the prerequisite graph to ensure you don't build on shaky foundations.</p>
+                
+                <div style="margin-top:1.5rem; padding:1rem; background:var(--bg); border-radius:0.5rem; font-family:monospace; font-size:0.85rem;">
+                    <div style="display:flex; align-items:center; margin-bottom:0.5rem;">
+                        <span style="display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:8px; background:var(--error);"></span>
+                        <span>Foundational Gap</span>
+                    </div>
+                    <div style="margin-left:4px; border-left:2px solid var(--border); height:12px; margin-bottom:0.5rem;"></div>
+                    <div style="display:flex; align-items:center; margin-bottom:0.5rem;">
+                        <span style="display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:8px; background:var(--warning);"></span>
+                        <span>Bridge Concept</span>
+                    </div>
+                    <div style="margin-left:4px; border-left:2px solid var(--border); height:12px; margin-bottom:0.5rem;"></div>
+                    <div style="display:flex; align-items:center;">
+                        <span style="display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:8px; background:var(--primary);"></span>
+                        <span>Target Topic</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h4>Next Steps</h4>
+                <p class="text-light" style="font-size:0.9rem;">After you complete a practice or diagnostic check, your plan will automatically adapt.</p>
+                <div style="margin-top:1.5rem;">
+                    <a href="{% url 'progress:history' %}" class="btn btn-secondary" style="width:100%; text-align:center;">📈 View Progress Tracker</a>
+                </div>
+                <div style="margin-top:0.5rem;">
+                    <a href="{% url 'quizzes:start_quiz' %}" class="btn btn-primary" style="width:100%; text-align:center;">🔄 Take Fresh Verification</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

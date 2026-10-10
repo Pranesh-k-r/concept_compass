@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<div class="practice-container">
+    <div class="card mt-4">
+        <h2>Practice: {{ concept.name }}</h2>
+        
+        {% if error %}
+            <p class="text-error">{{ error }}</p>
+            <a href="{% url 'dashboard' %}" class="btn btn-primary mt-3">Return to Dashboard</a>
+        {% else %}
+            <form method="POST" action="{% url 'learning:practice' concept.concept_id %}">
+                {% csrf_token %}
+                <input type="hidden" name="correct_answer" value="{{ question.correct_answer }}">
+                
+                <h3 class="my-4" style="font-size: 1.25rem;">{{ question.question_text }}</h3>
+                
+                <div class="options my-4">
+                    {% if options %}
+                        {% for opt in options %}
+                            <label class="radio-label" style="display: block; padding: 1rem; border: 1px solid var(--border); border-radius: 0.5rem; margin-bottom: 0.5rem; cursor: pointer; transition: all 0.2s;">
+                                <input type="radio" name="answer" value="{{ opt }}" required style="margin-right: 0.5rem;">
+                                {{ opt }}
+                            </label>
+                        {% endfor %}
+                    {% else %}
+                        <input type="text" name="answer" class="text-input" placeholder="Enter your answer" required>
+                    {% endif %}
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Check Answer</button>
+            </form>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

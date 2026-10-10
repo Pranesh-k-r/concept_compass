@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="verify-container">
+    <div class="card mt-4" style="border-top: 4px solid var(--primary);">
+        <h2>Final Verification: {{ concept.name }}</h2>
+        <p>Let's see if you've mastered this concept. Answer this fresh question.</p>
+        
+        <form method="POST" action="{% url 'learning:verify' concept.concept_id %}">
+            {% csrf_token %}
+            <input type="hidden" name="correct_answer" value="{{ question.correct_answer }}">
+            
+            <h3 class="my-4">{{ question.question_text }}</h3>
+            
+            <div class="options my-4">
+                {% if question.common_distractor %}
+                    <label class="radio-label">
+                        <input type="radio" name="answer" value="{{ question.correct_answer }}" required>
+                        {{ question.correct_answer }}
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="answer" value="{{ question.common_distractor }}" required>
+                        {{ question.common_distractor }}
+                    </label>
+                {% else %}
+                    <input type="text" name="answer" class="text-input" placeholder="Enter your answer" required>
+                {% endif %}
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Submit Verification</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

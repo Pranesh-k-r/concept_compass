@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="hero">
+    <h1>Discover Your True Learning Path</h1>
+    <p>Grades 7–8 Mathematics Diagnostic Engine</p>
+    <p class="subtitle">Concept Compass goes beyond simple right or wrong answers. We analyze your quiz performance to discover underlying prerequisite concept gaps and provide targeted lessons to fix them.</p>
+    
+    <div class="learning-cycle">
+        <div class="cycle-step">1. Diagnose</div>
+        <div class="cycle-arrow">→</div>
+        <div class="cycle-step">2. Explain</div>
+        <div class="cycle-arrow">→</div>
+        <div class="cycle-step">3. Teach</div>
+        <div class="cycle-arrow">→</div>
+        <div class="cycle-step">4. Practise</div>
+        <div class="cycle-arrow">→</div>
+        <div class="cycle-step">5. Verify</div>
+    </div>
+    
+    <a href="{% url 'dashboard' %}" class="btn btn-primary btn-large mt-4">Start Learning Journey</a>
+</div>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="quiz-container">
+    <div class="progress-bar">
+        <span>Question {{ current_num }} of {{ total }}</span>
+    </div>
+    
+    <div class="card mt-4">
+        <h2>{{ question.question_text }}</h2>
+        
+        <form method="POST" action="{% url 'quizzes:quiz_question' session_id=request.resolver_match.kwargs.session_id %}">
+            {% csrf_token %}
+            
+            <div class="options my-4">
+                <!-- If it's a multiple choice question based on common_distractor -->
+                {% if question.common_distractor %}
+                    <label class="radio-label">
+                        <input type="radio" name="answer" value="{{ question.correct_answer }}" required>
+                        {{ question.correct_answer }}
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="answer" value="{{ question.common_distractor }}" required>
+                        {{ question.common_distractor }}
+                    </label>
+                {% else %}
+                    <!-- Free text input if no distractor -->
+                    <input type="text" name="answer" class="text-input" placeholder="Enter your answer" required>
+                {% endif %}
+            </div>
+            
+            <div style="margin: 2rem 0; padding: 1rem; background: var(--surface); border-radius: 0.5rem; border: 1px solid var(--border);">
+                <p style="margin-top:0; font-weight:600; margin-bottom:0.75rem;">How confident are you in this answer?</p>
+                <div style="display:flex; gap:1.5rem; flex-wrap:wrap;">
+                    <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+                        <input type="radio" name="confidence" value="not_sure" required> Not Sure
+                    </label>
+                    <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+                        <input type="radio" name="confidence" value="somewhat_sure"> Somewhat Sure
+                    </label>
+                    <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+                        <input type="radio" name="confidence" value="very_sure"> Very Sure
+                    </label>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Submit Answer</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

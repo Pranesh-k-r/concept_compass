@@ -1,0 +1,16 @@
+{
+  "name": "Concept Compass",
+  "short_name": "Compass",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4f46e5",
+  "description": "Educational diagnostic web application for Mathematics.",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3242/3242257.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

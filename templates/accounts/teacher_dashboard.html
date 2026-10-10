@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="dashboard">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
+        <div>
+            <h2 style="margin:0;">Teacher Analytics Dashboard</h2>
+            <p style="margin:0.25rem 0 0 0;">Monitor student progress, identify learning gaps, and track intervention outcomes.</p>
+        </div>
+        <div style="display:flex; gap:0.5rem; margin-top:0.5rem;">
+            <a href="?subject=Mathematics" class="btn btn-small {% if current_subject == 'Mathematics' %}btn-primary{% else %}btn-secondary{% endif %}">📐 Mathematics</a>
+            <a href="?subject=English" class="btn btn-small {% if current_subject == 'English' %}btn-primary{% else %}btn-secondary{% endif %}">📚 English</a>
+        </div>
+    </div>
+    
+    <div style="display:flex; gap:1rem; margin-top:2rem; flex-wrap:wrap;">
+        <div class="card" style="flex:1; text-align:center;">
+            <h1 class="text-primary" style="font-size:3rem; margin:0;">{{ total_students }}</h1>
+            <p class="text-light text-uppercase">Total Students</p>
+        </div>
+        <div class="card" style="flex:1; text-align:center;">
+            <h1 class="text-primary" style="font-size:3rem; margin:0;">{{ overall_accuracy }}%</h1>
+            <p class="text-light text-uppercase">Class Accuracy</p>
+        </div>
+        <div class="card" style="flex:1; text-align:center;">
+            <h1 class="text-primary" style="font-size:3rem; margin:0;">{{ interventions|length }}</h1>
+            <p class="text-light text-uppercase">Interventions Needed</p>
+        </div>
+    </div>
+    
+    <div class="card mt-4">
+        <h3>Student Intervention Recommendations</h3>
+        {% if interventions %}
+            <table style="width:100%; border-collapse: collapse; margin-top:1rem;">
+                <thead>
+                    <tr style="border-bottom: 2px solid var(--border);">
+                        <th style="padding:0.5rem; text-align:left;">Student</th>
+                        <th style="padding:0.5rem; text-align:left;">Topic Requiring Attention</th>
+                        <th style="padding:0.5rem; text-align:left;">Accuracy</th>
+                        <th style="padding:0.5rem; text-align:center;">Study Plan Status</th>
+                        <th style="padding:0.5rem; text-align:right;">Suggested Intervention</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for inv in interventions %}
+                    <tr style="border-bottom: 1px solid var(--border);">
+                        <td style="padding:0.5rem;">{{ inv.student }}</td>
+                        <td style="padding:0.5rem;">
+                            <span class="badge" style="background:{% if inv.rank == 0 %}var(--error){% else %}var(--warning){% endif %}; color:#fff;">
+                                {{ inv.topic }}
+                            </span>
+                        </td>
+                        <td style="padding:0.5rem;">{{ inv.accuracy }}% ({{ inv.attempted }} attempts)</td>
+                        <td style="padding:0.5rem; text-align:center;">
+                            {% if inv.plan_progress is not None %}
+                                <span class="badge" style="background:var(--bg); border:1px solid var(--border);">{{ inv.plan_progress }}% Complete</span>
+                            {% else %}
+                                <span class="text-light" style="font-size:0.85rem;">No active plan</span>
+                            {% endif %}
+                        </td>
+                        <td style="padding:0.5rem; text-align:right;">
+                            <a href="{% url 'learning:lesson' inv.concept_id %}" class="btn btn-small btn-primary">Assign Lesson</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="text-light mt-3">No urgent interventions needed. Great job!</p>
+        {% endif %}
+    </div>
+
+    <div class="card mt-4">
+        <h3>Class Performance Heatmap</h3>
+        <p class="text-light mb-2">Rows: Students | Columns: Topics. Colored by learning priority.</p>
+        <div class="table-responsive">
+            <style>
+                .h-cell { padding: 0.5rem; text-align: center; border: 1px solid var(--border); font-size: 0.8rem; }
+                .h-red { background: #fee2e2; color: #b91c1c; } /* Study First */
+                .h-orange { background: #ffedd5; color: #c2410c; } /* Study Next */
+                .h-green { background: #d1fae5; color: #15803d; } /* Review */
+                .h-gray { background: #f1f5f9; color: #94a3b8; } /* Need Evidence */
+            </style>
+            <table style="width:100%; border-collapse: collapse; margin-top:1rem;">
+                <thead>
+                    <tr>
+                        <th style="padding:0.5rem; border:1px solid var(--border);">Student</th>
+                        {% for c in concepts %}
+                            <th class="h-cell" title="{{ c.name }}">{{ c.concept_id }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in heatmap %}
+                    <tr>
+                        <th style="padding:0.5rem; border:1px solid var(--border); text-align:left;">{{ row.student }}</th>
+                        {% for c in concepts %}
+                            {% with p=row.topics|dictsort:c.name|first %}
+                                {% for key, val in row.topics.items %}
+                                    {% if key == c.name %}
+                                        <td class="h-cell {% if val.rank == 0 %}h-red{% elif val.rank == 1 %}h-orange{% elif val.rank == 2 %}h-green{% else %}h-gray{% endif %}" title="{{ key }} | Accuracy: {{ val.accuracy }}%">
+                                            {{ val.accuracy }}%
+                                        </td>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if c.name not in row.topics %}
+                                    <td class="h-cell h-gray">-</td>
+                                {% endif %}
+                            {% endwith %}
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

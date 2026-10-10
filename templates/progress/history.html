@@ -1,0 +1,277 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="history-container">
+    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
+        <div>
+            <h2 style="margin:0;">Learning Progress</h2>
+            <p style="margin:0.25rem 0 0 0;">Track your diagnostic quizzes and learning activities.</p>
+        </div>
+        <div style="display:flex; gap:0.5rem; margin-top:0.5rem;">
+            <a href="?subject=Mathematics" class="btn btn-small {% if current_subject == 'Mathematics' %}btn-primary{% else %}btn-secondary{% endif %}">📐 Mathematics</a>
+            <a href="?subject=English" class="btn btn-small {% if current_subject == 'English' %}btn-primary{% else %}btn-secondary{% endif %}">📚 English</a>
+        </div>
+    </div>
+    
+    <div style="display:flex; gap:1rem; margin-top:2rem; flex-wrap:wrap;">
+        <div class="card" style="flex:1; text-align:center;">
+            <h1 class="text-primary">{{ total_quizzes }}</h1>
+            <p class="text-light text-uppercase">Quizzes Taken</p>
+        </div>
+        <div class="card" style="flex:1; text-align:center;">
+            <h1 class="text-primary">{{ total_questions }}</h1>
+            <p class="text-light text-uppercase">Questions Attempted</p>
+        </div>
+        <div class="card" style="flex:1; text-align:center;">
+            <h1 class="text-primary">{{ overall_accuracy }}%</h1>
+            <p class="text-light text-uppercase">Overall Accuracy</p>
+        </div>
+        <div class="card" style="flex:1; text-align:center;">
+            <h1 class="text-primary">{{ mastered_count }}</h1>
+            <p class="text-light text-uppercase">Concepts Mastered</p>
+        </div>
+    </div>
+
+    <div class="card mt-4">
+        <h3>Topic-wise Progress</h3>
+        {% if topics_progress %}
+            <table style="width:100%; text-align:left; border-collapse: collapse; margin-top:1rem;">
+                <thead>
+                    <tr style="border-bottom: 2px solid var(--border);">
+                        <th style="padding:0.5rem;">Concept</th>
+                        <th style="padding:0.5rem;">Attempted</th>
+                        <th style="padding:0.5rem;">Accuracy</th>
+                        <th style="padding:0.5rem;">Status</th>
+                        <th style="padding:0.5rem; text-align:right;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for t in topics_progress %}
+                    <tr style="border-bottom: 1px solid var(--border);">
+                        <td style="padding:0.5rem;">{{ t.concept.name }}</td>
+                        <td style="padding:0.5rem;">{{ t.attempted }}</td>
+                        <td style="padding:0.5rem;">
+                            <div style="background:#e2e8f0; height:8px; width:100px; border-radius:4px; display:inline-block; vertical-align:middle; margin-right:0.5rem;">
+                                <div style="background:var(--primary); height:100%; width:{{ t.accuracy }}%; border-radius:4px;"></div>
+                            </div>
+                            {{ t.accuracy }}%
+                        </td>
+                        <td style="padding:0.5rem;">
+                            <span class="badge" style="background:{% if t.rank == 0 %}var(--error){% elif t.rank == 1 %}var(--warning){% elif t.rank == 2 %}var(--success){% else %}var(--text-light){% endif %}; color:#fff;">
+                                {{ t.category }}
+                            </span>
+                        </td>
+                        <td style="padding:0.5rem; text-align:right;">
+                            <div style="display:flex; gap:0.5rem; justify-content:flex-end;">
+                                {% if t.category == 'Study First' %}
+                                    <a href="{% url 'learning:lesson' t.concept.concept_id %}" class="btn btn-small btn-primary">📚 Study Now</a>
+                                    <form method="POST" action="{% url 'assistant:find_gap' %}" style="margin:0;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="concept_id" value="{{ t.concept.concept_id }}">
+                                        <input type="hidden" name="subject" value="{{ current_subject }}">
+                                        <button type="submit" class="btn btn-small btn-secondary">🔍 Find Gap (AI)</button>
+                                    </form>
+                                {% elif t.category == 'Study Next' %}
+                                    <a href="{% url 'learning:lesson' t.concept.concept_id %}" class="btn btn-small btn-secondary">📖 Start Learning</a>
+                                    <form method="POST" action="{% url 'assistant:find_gap' %}" style="margin:0;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="concept_id" value="{{ t.concept.concept_id }}">
+                                        <input type="hidden" name="subject" value="{{ current_subject }}">
+                                        <button type="submit" class="btn btn-small btn-secondary">🔍 Find Gap (AI)</button>
+                                    </form>
+                                {% elif t.category == 'Review and Maintain' %}
+                                    <a href="{% url 'learning:practice' t.concept.concept_id %}" class="btn btn-small btn-secondary" style="background:var(--success);">🔄 Practice Again</a>
+                                {% else %}
+                                    <a href="{% url 'learning:practice' t.concept.concept_id %}" class="btn btn-small btn-secondary" style="background:var(--text-light);">🎯 Check Understanding</a>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="empty-state">
+                <p>No topic data to display yet.</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="card mt-4">
+        <h3>Prerequisite Gap Analytics</h3>
+        <p class="mb-4">Explore statistical relationships between foundational prerequisites and target topics.</p>
+        
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        
+        <div style="display:flex; flex-wrap:wrap; gap:2rem; margin-bottom:2rem;">
+            <!-- Bar Chart -->
+            <div style="flex:1; min-width:300px;">
+                <h4>Prerequisite Performance</h4>
+                <canvas id="barChart" height="200"></canvas>
+            </div>
+            
+            <!-- Scatter Plot -->
+            <div style="flex:1; min-width:300px;">
+                <h4>Prerequisite vs. Target Accuracy</h4>
+                <canvas id="scatterChart" height="200"></canvas>
+            </div>
+        </div>
+        
+        <!-- Heatmap -->
+        <h4>Prerequisite Gap Matrix</h4>
+        <div class="table-responsive">
+            <style>
+                .heatmap-cell { padding: 1rem; text-align: center; border: 1px solid var(--border); font-weight: bold; }
+                .gap-high { background: #fee2e2; color: #b91c1c; } /* Red */
+                .gap-med { background: #ffedd5; color: #c2410c; } /* Orange */
+                .gap-none { background: #d1fae5; color: #15803d; } /* Green */
+                .gap-empty { background: #f1f5f9; color: #94a3b8; } /* Gray */
+            </style>
+            <table style="width:100%; border-collapse: collapse; margin-top:1rem;">
+                <thead>
+                    <tr>
+                        <th style="padding:0.5rem; border:1px solid var(--border);">Prerequisite ↓ \ Target →</th>
+                        {% for target in heatmap_targets %}
+                            <th style="padding:0.5rem; border:1px solid var(--border);">{{ target }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for prereq, targets in heatmap_data.items %}
+                    <tr>
+                        <th style="padding:0.5rem; border:1px solid var(--border); text-align:left;">{{ prereq }}</th>
+                        {% for target in heatmap_targets %}
+                            {% with cell=targets|dictsort:target|first %}
+                                {% for k, v in targets.items %}
+                                    {% if k == target %}
+                                        <td class="heatmap-cell {{ v.class }}" title="Prereq Accuracy: {{ v.p_acc }}% | Target Accuracy: {{ v.t_acc }}%">
+                                            {{ v.score }}
+                                        </td>
+                                    {% endif %}
+                                {% empty %}
+                                    <td class="heatmap-cell gap-empty">-</td>
+                                {% endfor %}
+                                {% if target not in targets %}
+                                    <td class="heatmap-cell gap-empty">-</td>
+                                {% endif %}
+                            {% endwith %}
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <script>
+            // Bar Chart Initialization
+            const rawBar = JSON.parse('{{ bar_data|safe }}');
+            const barCtx = document.getElementById('barChart').getContext('2d');
+            new Chart(barCtx, {
+                type: 'bar',
+                data: {
+                    labels: rawBar.map(d => d.label),
+                    datasets: [{
+                        label: 'Accuracy %',
+                        data: rawBar.map(d => d.accuracy),
+                        backgroundColor: rawBar.map(d => d.color)
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                afterLabel: function(context) {
+                                    return rawBar[context.dataIndex].attempted + ' attempts';
+                                }
+                            }
+                        }
+                    },
+                    scales: { y: { beginAtZero: true, max: 100 } }
+                }
+            });
+            
+            // Scatter Plot Initialization
+            const rawScatter = JSON.parse('{{ scatter_data|safe }}');
+            const scatterCtx = document.getElementById('scatterChart').getContext('2d');
+            new Chart(scatterCtx, {
+                type: 'scatter',
+                data: {
+                    datasets: [{
+                        label: 'Concept Pairs',
+                        data: rawScatter.map(d => ({x: d.x, y: d.y, raw: d})),
+                        backgroundColor: '#4f46e5',
+                        pointRadius: 6,
+                        pointHoverRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(ctx) {
+                                    const d = ctx.raw.raw;
+                                    return d.p_name + ' (' + d.x + '%) → ' + d.t_name + ' (' + d.y + '%)';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: { title: { display: true, text: 'Prerequisite Accuracy %' }, min: 0, max: 100 },
+                        y: { title: { display: true, text: 'Target Accuracy %' }, min: 0, max: 100 }
+                    }
+                }
+            });
+        </script>
+    </div>
+
+    <div class="card mt-4">
+        <h3>Learning Activity Timeline</h3>
+        {% if sessions %}
+            <ul style="list-style-type:none; padding-left:0;">
+                {% for session in sessions %}
+                <li style="margin-bottom:1rem; padding-bottom:1rem; border-bottom:1px solid var(--border);">
+                    <div style="display:flex; justify-content:space-between;">
+                        <strong>Quiz Session {{ session.id }}</strong>
+                        <span class="text-light">{{ session.started_at|date:"M d, Y h:i A" }}</span>
+                    </div>
+                    {% if session.responses.count > 0 %}
+                        <p class="text-light mb-2">Answered {{ session.responses.count }} questions.</p>
+                        {% if session.completed_at %}
+                            <a href="{% url 'quizzes:diagnostic_report' session.id %}" class="btn btn-small btn-secondary">View Report</a>
+                        {% else %}
+                            <a href="{% url 'quizzes:quiz_question' session.id %}" class="btn btn-small">Resume Quiz</a>
+                        {% endif %}
+                    {% else %}
+                        <p class="text-light mb-2">Opened but no questions answered.</p>
+                        <span class="badge badge-warning" style="background:#fef08a; color:#854d0e;">Abandoned</span>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <div class="empty-state">
+                <p>No history to display yet.</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Phase 6 Concept Graph placeholder -->
+    <div class="card mt-4">
+        <h3>Concept Map</h3>
+        <p>This shows how different math concepts connect together.</p>
+        <div id="concept-graph" style="background:#f1f5f9; min-height:300px; border-radius:0.5rem; display:flex; align-items:center; justify-content:center; flex-direction:column;">
+            <!-- Simple textual fallback for the graph -->
+            <ul style="list-style-type:none; padding:0; text-align:center;">
+                <li>Whole-number operations 
+                    <ul>
+                        <li>↓ Fractions, Decimals, Negative numbers</li>
+                    </ul>
+                </li>
+            </ul>
+            <a href="{% url 'progress:graph' %}" class="btn btn-secondary mt-3">View Full Interactive Map</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

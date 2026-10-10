@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<div class="practice-result-container">
+    <div class="card mt-4">
+        <h2>Practice Result</h2>
+        
+        {% if is_correct %}
+            <div class="badge badge-success" style="font-size:1.2rem; padding: 1rem; display:inline-block;">Great Job! That's correct.</div>
+            <p class="mt-4">You successfully answered the question.</p>
+        {% else %}
+            <div class="badge badge-high" style="font-size:1.2rem; padding: 1rem; display:inline-block;">Not quite right.</div>
+            <p class="mt-4">Your answer was: <strong>{{ submitted_answer }}</strong></p>
+            <p>The correct method involves applying the rules for {{ concept.name }}. The correct answer was: <strong>{{ question.correct_answer }}</strong></p>
+        {% endif %}
+        
+        <div class="actions mt-4">
+            <a href="{% url 'learning:practice' concept.concept_id %}" class="btn btn-secondary">Try Another Practice Question</a>
+            <a href="{% url 'learning:verify' concept.concept_id %}" class="btn btn-primary ml-2">Move to Verification</a>
+        </div>
+    </div>
+</div>
+<script>
+    {% if is_correct %}
+        window.playSound('success');
+    {% else %}
+        window.playSound('error');
+    {% endif %}
+</script>
+{% endblock %}

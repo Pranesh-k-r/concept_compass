@@ -1,0 +1,299 @@
+{% extends 'base.html' %}
+{% block title %}AI Learning Assistant - Concept Compass{% endblock %}
+
+{% block content %}
+<style>
+    .chat-container {
+        display: flex;
+        flex-direction: column;
+        height: 80vh;
+        max-height: 800px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 0.5rem;
+        overflow: hidden;
+    }
+    
+    .chat-header {
+        padding: 1rem;
+        background: var(--bg);
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    
+    .chat-messages {
+        flex: 1;
+        padding: 1rem;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        background: #f8fafc;
+    }
+    
+    .msg {
+        max-width: 80%;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        position: relative;
+    }
+    
+    .msg-user {
+        background: var(--primary);
+        color: white;
+        align-self: flex-end;
+        border-bottom-right-radius: 0;
+    }
+    
+    .msg-assistant {
+        background: white;
+        border: 1px solid var(--border);
+        color: var(--text);
+        align-self: flex-start;
+        border-bottom-left-radius: 0;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    
+    .chat-input-area {
+        padding: 1rem;
+        background: white;
+        border-top: 1px solid var(--border);
+        display: flex;
+        gap: 0.5rem;
+    }
+    
+    .chat-input {
+        flex: 1;
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--border);
+        border-radius: 2rem;
+        outline: none;
+    }
+    
+    .chat-input:focus {
+        border-color: var(--primary);
+    }
+    
+    .send-btn {
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 45px;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+    
+    .send-btn:hover {
+        transform: scale(1.05);
+    }
+    
+    .loading-indicator {
+        display: none;
+        align-self: flex-start;
+        background: transparent;
+        padding: 0.5rem;
+        color: var(--text-light);
+    }
+    
+    .suggested-qs {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        margin-top: 0.5rem;
+    }
+    
+    .suggested-q {
+        font-size: 0.8rem;
+        background: #e0e7ff;
+        color: var(--primary);
+        padding: 0.4rem 0.8rem;
+        border-radius: 1rem;
+        cursor: pointer;
+        border: none;
+    }
+</style>
+
+<div class="container py-4">
+    <div class="chat-container">
+        <!-- Settings Header -->
+        <div class="chat-header">
+            <div>
+                <h3 style="margin:0; display:flex; align-items:center; gap:0.5rem;">
+                    🤖 {% if api_key_configured %}AI Learning Assistant{% else %}Concept Compass Learning Assistant — Offline Mode{% endif %}
+                </h3>
+                <p style="margin:0; font-size:0.85rem; color:var(--text-light);">Ask me anything about your studies!</p>
+            </div>
+            
+            <form method="POST" action="{% url 'assistant:chat' %}" style="display:flex; gap:0.5rem; align-items:center;">
+                {% csrf_token %}
+                <select name="subject" class="form-control" style="width:auto; padding:0.25rem 0.5rem;" onchange="this.form.submit()">
+                    <option value="Mathematics" {% if conversation.subject == 'Mathematics' %}selected{% endif %}>Mathematics</option>
+                    <option value="English" {% if conversation.subject == 'English' %}selected{% endif %}>English</option>
+                </select>
+                <select name="grade" class="form-control" style="width:auto; padding:0.25rem 0.5rem;" onchange="this.form.submit()">
+                    <option value="7" {% if conversation.grade == '7' %}selected{% endif %}>Grade 7</option>
+                    <option value="8" {% if conversation.grade == '8' %}selected{% endif %}>Grade 8</option>
+                </select>
+                <select name="language" class="form-control" style="width:auto; padding:0.25rem 0.5rem;" onchange="this.form.submit()">
+                    <option value="English" {% if conversation.language == 'English' %}selected{% endif %}>English</option>
+                    <option value="Kannada" {% if conversation.language == 'Kannada' %}selected{% endif %}>Kannada (ಕನ್ನಡ)</option>
+                </select>
+            </form>
+        </div>
+        
+        <!-- Messages -->
+        <div class="chat-messages" id="chatMessages">
+            <div class="msg msg-assistant">
+                Hi {{ user.username }}! I'm your AI Learning Assistant. I'm currently set to help you with <strong>Grade {{ conversation.grade }} {{ conversation.subject }}</strong> in <strong>{{ conversation.language }}</strong>.<br><br>How can I help you today?
+                
+                <div class="suggested-qs">
+                    <button class="suggested-q" onclick="setInputValue('Can you explain equivalent fractions?')">Explain equivalent fractions</button>
+                    <button class="suggested-q" onclick="setInputValue('Give me a practice question.')">Give me a practice question</button>
+                    <button class="suggested-q" onclick="setInputValue('How do I use commas correctly?')">How do I use commas correctly?</button>
+                </div>
+            </div>
+            
+            {% for msg in chat_messages %}
+                {% if msg.role == 'user' %}
+                    <div class="msg msg-user">{{ msg.content }}</div>
+                {% elif msg.role == 'assistant' %}
+                    <div class="msg msg-assistant markdown-content">{{ msg.content }}</div>
+                {% endif %}
+            {% endfor %}
+            
+            <div class="loading-indicator" id="loadingIndicator">
+                Thinking... 💭
+            </div>
+        </div>
+        
+        <!-- Input Area -->
+        <form class="chat-input-area" id="chatForm">
+            <input type="hidden" id="conversationId" value="{{ conversation.id }}">
+            <input type="text" class="chat-input" id="chatInput" placeholder="Type your message here..." required autocomplete="off">
+            <button type="submit" class="send-btn" id="sendBtn">➤</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Initial markdown rendering for page load
+    document.querySelectorAll('.markdown-content').forEach(el => {
+        let content = el.innerHTML;
+        content = content
+            .replace(/\n/g, '<br>')
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+            .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" style="color:var(--primary); text-decoration:underline;">$1</a>');
+        el.innerHTML = content;
+    });
+    const chatMessages = document.getElementById('chatMessages');
+    const chatForm = document.getElementById('chatForm');
+    const chatInput = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const loadingIndicator = document.getElementById('loadingIndicator');
+    const conversationId = document.getElementById('conversationId').value;
+    
+    // Scroll to bottom on load
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    
+    if (chatForm && chatInput) {
+        function setInputValue(val) {
+            chatInput.value = val;
+            chatInput.focus();
+        }
+
+    
+    let isSubmitting = false;
+    
+    async function submitMessage(content, isRetry = false) {
+        if (!content || isSubmitting) return;
+        isSubmitting = true;
+        
+        if (!isRetry) {
+            // Add user msg to UI
+            const userDiv = document.createElement('div');
+            userDiv.className = 'msg msg-user';
+            userDiv.textContent = content;
+            chatMessages.insertBefore(userDiv, loadingIndicator);
+        }
+        
+        chatInput.value = '';
+        chatInput.disabled = true;
+        sendBtn.disabled = true;
+        loadingIndicator.style.display = 'block';
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        
+        try {
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            const res = await fetch('{% url "assistant:send_message" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrfToken
+                },
+                body: JSON.stringify({
+                    content: content,
+                    conversation_id: conversationId
+                })
+            });
+            
+            const data = await res.json();
+            
+            if(data.error) {
+                throw new Error(data.error);
+            }
+            
+            const assistantDiv = document.createElement('div');
+            assistantDiv.className = 'msg msg-assistant';
+            
+            // Simple markdown parser for links and bold
+            let formattedContent = data.message.content
+                .replace(/\n/g, '<br>')
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" style="color:var(--primary); text-decoration:underline;">$1</a>');
+                
+            assistantDiv.innerHTML = formattedContent;
+            chatMessages.insertBefore(assistantDiv, loadingIndicator);
+            
+        } catch(err) {
+            console.error(err);
+            const errDiv = document.createElement('div');
+            errDiv.className = 'msg msg-assistant';
+            errDiv.style.borderLeft = '4px solid var(--error)';
+            errDiv.innerHTML = `⚠️ <strong>Error:</strong> ${err.message || 'Could not reach the AI provider. Please try again.'}`;
+            
+            const retryBtn = document.createElement('button');
+            retryBtn.className = 'btn btn-small mt-2';
+            retryBtn.textContent = 'Retry';
+            retryBtn.onclick = () => { 
+                errDiv.remove(); 
+                submitMessage(content, true); 
+            };
+            errDiv.appendChild(retryBtn);
+            
+            chatMessages.insertBefore(errDiv, loadingIndicator);
+        } finally {
+            loadingIndicator.style.display = 'none';
+            chatInput.disabled = false;
+            sendBtn.disabled = false;
+            chatInput.focus();
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            isSubmitting = false;
+        }
+    }
+    
+    chatForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        submitMessage(chatInput.value.trim(), false);
+    });
+    }
+</script>
+{% endblock %}

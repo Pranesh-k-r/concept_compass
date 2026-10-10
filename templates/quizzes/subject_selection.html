@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="card" style="margin-top:2rem;">
+    <h2 class="text-center" style="margin-bottom:0.5rem;">What would you like to study today?</h2>
+    <p class="text-center text-light mb-4">Choose a subject below to start a diagnostic quiz.</p>
+    
+    <div style="display:flex; flex-wrap:wrap; gap:2rem; justify-content:center;">
+        
+        <!-- Mathematics Card -->
+        <div class="card" style="flex:1; min-width:300px; max-width:400px; border-top:6px solid #4f46e5; text-align:center;">
+            <div style="font-size:3rem; margin-bottom:1rem;">📐</div>
+            <h3 style="margin-bottom:0.5rem;">Mathematics</h3>
+            <p class="text-light" style="font-size:0.9rem;">Master algebra, fractions, geometry, and problem-solving through adaptive logic.</p>
+            
+            <div style="margin:1.5rem 0; text-align:left; font-size:0.85rem; color:var(--text-light);">
+                <p><strong>Topics include:</strong></p>
+                <ul style="padding-left:1.5rem; margin-top:0.5rem;">
+                    <li>Division & Fractions</li>
+                    <li>Ratios & Proportions</li>
+                    <li>Basic Algebra</li>
+                </ul>
+            </div>
+            
+            <a href="{% url 'quizzes:start_quiz' %}?subject=Mathematics" class="btn btn-primary w-100">Start Math Quiz</a>
+        </div>
+        
+        <!-- English Card -->
+        <div class="card" style="flex:1; min-width:300px; max-width:400px; border-top:6px solid #f59e0b; text-align:center;">
+            <div style="font-size:3rem; margin-bottom:1rem;">📚</div>
+            <h3 style="margin-bottom:0.5rem;">English Language</h3>
+            <p class="text-light" style="font-size:0.9rem;">Improve grammar, vocabulary, reading comprehension, and sentence formation.</p>
+            
+            <div style="margin:1.5rem 0; text-align:left; font-size:0.85rem; color:var(--text-light);">
+                <p><strong>Topics include:</strong></p>
+                <ul style="padding-left:1.5rem; margin-top:0.5rem;">
+                    <li>Tenses & Articles</li>
+                    <li>Vocabulary & Synonyms</li>
+                    <li>Reading Comprehension</li>
+                </ul>
+            </div>
+            
+            <a href="{% url 'quizzes:start_quiz' %}?subject=English" class="btn btn-primary w-100" style="background:#f59e0b; border:none; box-shadow:0 4px 6px -1px rgba(245, 158, 11, 0.2);">Start English Quiz</a>
+        </div>
+        
+    </div>
+</div>
+{% endblock %}

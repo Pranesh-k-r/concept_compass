@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concept Compass | IGNITES</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="manifest" href="{% static 'manifest.json' %}">
+    <meta name="theme-color" content="#4f46e5">
+</head>
+<body>
+    <div class="app-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <a href="{% url 'landing_page' %}" class="brand">Concept Compass</a>
+            <div class="nav-links">
+                <a href="{% url 'dashboard' %}">📊 Dashboard</a>
+                <a href="{% url 'quizzes:subject_selection' %}">🎯 Take Quiz</a>
+                <a href="{% url 'progress:study_plan' %}">📅 Study Plan</a>
+                <a href="{% url 'progress:history' %}">📈 Progress Tracker</a>
+                
+                {% if user.is_authenticated and user.profile.is_teacher %}
+                    <hr style="border-color:var(--border); margin: 1rem 0;">
+                    <a href="{% url 'accounts:teacher_dashboard' %}" style="color:var(--warning);">👨‍🏫 Teacher Portal</a>
+                {% endif %}
+            </div>
+            
+            <div style="margin-top:auto;">
+                {% if user.is_authenticated %}
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-secondary w-100" style="text-align:left;">🚪 Logout ({{ user.username }})</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-secondary w-100 mb-2" style="text-align:center;">Login</a>
+                    <a href="{% url 'accounts:register' %}" class="btn btn-primary w-100" style="text-align:center;">Register</a>
+                {% endif %}
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <!-- Topbar -->
+            <header class="topbar">
+                <button class="mobile-menu-btn" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+                <div style="margin-left:auto; display:flex; align-items:center; gap:1rem;">
+                    {% if user.is_authenticated and not user.profile.is_teacher %}
+                        <span class="badge badge-success" style="font-size:0.85rem;">{{ user.profile.points }} pts 🔥{{ user.profile.current_streak }}</span>
+                    {% endif %}
+                    
+                    <!-- Language Toggle -->
+                    <select id="lang-toggle" style="background:var(--surface); border:1px solid var(--border); color:var(--text); border-radius:0.25rem; padding:0.25rem; cursor:pointer;">
+                        <option value="en">English</option>
+                        <option value="kn">ಕನ್ನಡ</option>
+                    </select>
+                    
+                    <button id="theme-toggle" style="background:none; border:none; color:var(--text-light); font-size:1.25rem; cursor:pointer;" title="Toggle Dark Mode">🌙</button>
+                </div>
+            </header>
+            
+            <!-- Page Content -->
+            <main class="content-area">
+                {% if messages %}
+                    <div style="margin-bottom: 1rem;">
+                        {% for message in messages %}
+                            <div style="padding: 1rem; border-radius: 0.5rem; margin-bottom: 0.5rem; 
+                                {% if message.tags == 'error' %}background: var(--error); color: white;
+                                {% elif message.tags == 'success' %}background: var(--success); color: white;
+                                {% else %}background: var(--primary); color: white;{% endif %}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                {% block content %}{% endblock %}
+            </main>
+            
+            <footer style="margin-top:auto; padding: 2rem; text-align:center; color:var(--text-light); border-top:1px solid var(--border);">
+                <p>Concept Compass - Developed by Team IGNITES</p>
+            </footer>
+        </div>
+    </div>
+    
+    <script>
+        // --- Dark Mode Toggle ---
+        const themeToggle = document.getElementById('theme-toggle');
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        if (currentTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            themeToggle.textContent = '☀️';
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            let theme = document.documentElement.getAttribute('data-theme');
+            if (theme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+                themeToggle.textContent = '🌙';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeToggle.textContent = '☀️';
+            }
+        });
+
+        // --- Language Toggle ---
+        const langToggle = document.getElementById('lang-toggle');
+        const currentLang = localStorage.getItem('app_lang') || 'en';
+        langToggle.value = currentLang;
+        
+        langToggle.addEventListener('change', (e) => {
+            localStorage.setItem('app_lang', e.target.value);
+            // In a real app we'd reload or fetch new content, but for the hackathon UI we just save it.
+            // It will trigger the chatbot language change immediately.
+        });
+
+        // --- Sound Effects ---
+        const audioSuccess = new Audio('https://cdn.pixabay.com/download/audio/2021/08/04/audio_0625c1539c.mp3');
+        const audioError = new Audio('https://cdn.pixabay.com/download/audio/2022/03/10/audio_c8c8a73467.mp3');
+        
+        window.playSound = function(type) {
+            if (type === 'success') audioSuccess.play().catch(e => console.log('Audio error:', e));
+            if (type === 'error') audioError.play().catch(e => console.log('Audio error:', e));
+        };
+    </script>
+
+    <!-- Floating AI Assistant Link -->
+    {% if request.resolver_match.view_name != 'assistant:chat' %}
+    <div style="position: fixed; bottom: 2rem; right: 2rem; z-index: 1000;">
+        <a href="{% url 'assistant:chat' %}" class="btn btn-primary" style="border-radius: 2rem; padding: 0.75rem 1.5rem; display: flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); text-decoration: none; color: white;">
+            🤖 AI Learning Assistant
+        </a>
+    </div>
+    {% endif %}
+</body>
+</html>
